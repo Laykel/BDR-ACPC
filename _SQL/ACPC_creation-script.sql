@@ -1,6 +1,8 @@
 -- *********************************************
 -- * SQL MySQL generation
 -- *--------------------------------------------
+-- * Authors: Loris Gilliand, Mateo Tutic, Luc Wachter
+-- * Group: 8
 -- * DB-MAIN version: 10.0.3
 -- * Generation date: Fri Dec  7 11:35:44 2018
 -- * Schema: ACPC/1-1
@@ -9,6 +11,7 @@
 -- Database Section
 -- ________________
 
+DROP DATABASE IF EXISTS ACPC;
 CREATE DATABASE ACPC;
 USE ACPC;
 
@@ -96,7 +99,7 @@ CREATE TABLE Composant (
      CarteGraphique BIGINT,
      Boitier BIGINT,
      Alimentation BIGINT,
-     constructeurNom VARCHAR(100) NOT NULL,
+     constructeurNom VARCHAR(100),
      CONSTRAINT PK_Composant PRIMARY KEY (noSerie));
 
 CREATE TABLE ConnecteurAlim (
@@ -205,7 +208,7 @@ ALTER TABLE Alimentation ADD CONSTRAINT FK_Alimentation_noSerieComposant
 ALTER TABLE Alimentation ADD CONSTRAINT FK_Alimentation_typeFacteurForme
      FOREIGN KEY (typeFacteurForme)
      REFERENCES FacteurForme  (`type`)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE Alimentation_ConnecteurAlim ADD CONSTRAINT FK_Alimentation_ConnecteurAlim_typeConnecteurAlim
@@ -259,13 +262,13 @@ ALTER TABLE CarteGraphique ADD CONSTRAINT FK_CarteGraphique_noSerieComposant
 ALTER TABLE CarteGraphique ADD CONSTRAINT FK_CarteGraphique_connecteurEmplacementCarteGraphique
      FOREIGN KEY (connecteurEmplacementCarteGraphique)
      REFERENCES EmplacementCarteGraphique (connecteur)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE CarteGraphique ADD CONSTRAINT FK_CarteGraphique_nomPuceGraphique
      FOREIGN KEY (nomPuceGraphique)
      REFERENCES PuceGraphique (nom)
-     ON DELETE CASCADE
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE CarteGraphique_Port ADD CONSTRAINT FK_CarteGraphique_Port_nomPort
@@ -301,25 +304,25 @@ ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_noSerieComposant
 ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_typeFacteurForme
      FOREIGN KEY (typeFacteurForme)
      REFERENCES FacteurForme  (`type`)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_connecteurConnecteurMemoireVive
      FOREIGN KEY (connecteurConnecteurMemoireVive)
      REFERENCES ConnecteurMemoireVive (connecteur)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_connecteurEmplacementCarteGraphique
      FOREIGN KEY (connecteurEmplacementCarteGraphique)
      REFERENCES EmplacementCarteGraphique (connecteur)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_nomSocket
      FOREIGN KEY (nomSocket)
      REFERENCES `Socket` (nom)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE CarteMere_Port ADD CONSTRAINT FK_CarteMere_Port_nomPort
@@ -355,13 +358,13 @@ ALTER TABLE MemoireMorte ADD CONSTRAINT FK_MemoireMorte_noSerieComposant
 ALTER TABLE MemoireMorte ADD CONSTRAINT FK_MemoireMorte_typeEmplacementMemoireMorte
      FOREIGN KEY (typeEmplacementMemoireMorte)
      REFERENCES EmplacementMemoireMorte  (`type`)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE MemoireMorte ADD CONSTRAINT FK_MemoireMorte_typeConnecteurAlim
      FOREIGN KEY (typeConnecteurAlim)
      REFERENCES ConnecteurAlim  (`type`)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE MemoireVive ADD CONSTRAINT FK_MemoireVive_noSerieComposant
@@ -373,7 +376,7 @@ ALTER TABLE MemoireVive ADD CONSTRAINT FK_MemoireVive_noSerieComposant
 ALTER TABLE MemoireVive ADD CONSTRAINT FK_MemoireVive_connecteurConnecteurMemoireVive
      FOREIGN KEY (connecteurConnecteurMemoireVive)
      REFERENCES ConnecteurMemoireVive (connecteur)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE Processeur ADD CONSTRAINT FK_Processeur_noSerieComposant
@@ -385,7 +388,7 @@ ALTER TABLE Processeur ADD CONSTRAINT FK_Processeur_noSerieComposant
 ALTER TABLE Processeur ADD CONSTRAINT FK_Processeur_nomSocket
      FOREIGN KEY (nomSocket)
      REFERENCES `Socket` (nom)
-     ON DELETE SET NULL
+     ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE PuceGraphique ADD CONSTRAINT FK_PuceGraphique_nomConstructeur
