@@ -59,31 +59,30 @@ if (file_exists($script)) {
   <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-      <a class="navbar-brand" href="#">
-        <img src="<?php echo ROOT; ?>/assets/img/logo.png" width="30" height="30" alt="logo">
+      <a class="navbar-brand" href="<?php echo ROOT; ?>">
+        <img src="<?php echo ROOT; ?>/assets/img/logo.png" width="65" height="60" alt="logo">
       </a>
-      <a class="navbar-brand" href="#">Navbar</a>
+      <div class="row" id="navbar-brand-title">
+        <div class="col-xl-12 col-lg-12">
+          <a class="navbar-brand">ASSISTANT DE CONFIGURATION</a>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-xl-12 col-lg-12">
+          <a class="navbar-brand">PC</a>
+        </div>
+      </div>
+
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarColor03">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="<?php echo URL; ?>?page=home">
-              ACCUEIL
-              <?php if($page=='home') : ?>
-                <span class="sr-only">(current)</span>
-              <?php endif; ?>
-            </a>
+          <li class="nav-item <?php if($page=='home') echo active; ?>">
+            <a class="nav-link" href="<?php echo URL; ?>?page=home">ACCUEIL</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo URL; ?>?page=about">
-              A PROPOS
-              <?php if($page=='about') : ?>
-                <span class="sr-only">(current)</span>
-              <?php endif; ?>
-            </a>
+          <li class="nav-item <?php if($page=='about') echo active; ?>">
+            <a class="nav-link" href="<?php echo URL; ?>?page=about">A PROPOS</a>
           </li>
         </ul>
       </div>
