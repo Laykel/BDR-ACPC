@@ -1,33 +1,43 @@
 <?php
-//---------------------------------------------------------
-// Filename: index.php
-// Creation date: 26.12.2018
-// Author: Luc Wachter
-// Function: Main page, includes scripts and pages
-//---------------------------------------------------------
+/*
+-----------------------------------------------------------------------------------
+Projet      : ACPC
+Fichier     : index.php
+Auteur(s)   : Gilliand Loris - Tutic Mateo - Wachter Luc
+Date        : 21.12.2018
 
-// DISPLAY ERRORS - TO DELETE
+But         : Page principale de l'application web
+
+Remarque(s) : Inclus les différents scripts et pages secondaires
+
+PHP version : 7.2.13
+-----------------------------------------------------------------------------------
+*/
+
+// AFFICHAGE DES ERREURS PHP - A SUPPRIMER
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 session_start();
-// Definition of the path to the document root
+
+// Définition du chemin d'accès au document racine
 define('ROOT', dirname('index.php'));
-// Definition of the path to the site's index
+
+// Définition du chemin d'accès à l'index du site
 define('URL', "http://acpc.test");
 
-// Definition of the current page using the querystring
+// Définition de la page courante
 $page = 'home';
-if(isset($_GET['page']) && $_GET['page'] != ''){
+if (isset($_GET['page']) && $_GET['page'] != '') {
     $page = htmlspecialchars($_GET['page']);
 }
 
-// Inclusion of the DB request handling function
+// Inclusion de la fonction de connection à la base de données
 include(ROOT."/sources/model/dbRequest.php");
 
-// Inclusion of the script associated with the page
+// Inclusion du script associé à la page courante
 $script = ROOT."/sources/scripts/".$page."Script.php";
-if(file_exists($script)){
+if (file_exists($script)) {
     include($script);
 }
 ?>
@@ -83,11 +93,10 @@ if(file_exists($script)){
         $pagePath = ROOT."/sources/pages/".$page.".php";
 
         // If the file exists, include the page, if not show unknown message
-        if(file_exists($pagePath)){
-          include($pagePath);
-        }
-        else{
-          header("location:".URL."?page=unknown");
+        if (file_exists($pagePath)) {
+            include($pagePath);
+        } else {
+            header("location:".URL."?page=unknown");
         }
       ?>
     </div>
