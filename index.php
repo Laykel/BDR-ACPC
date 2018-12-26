@@ -70,16 +70,20 @@ if (file_exists($script)) {
       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarColor03">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home<?php if($page=='home') : ?><span class="sr-only">(current)</span><?php endif; ?></a>
+            <a class="nav-link" href="<?php echo URL; ?>?page=home">
+              ACCUEIL
+              <?php if($page=='home') : ?>
+                <span class="sr-only">(current)</span>
+              <?php endif; ?>
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="<?php echo URL; ?>?page=about">
+              A PROPOS
+              <?php if($page=='about') : ?>
+                <span class="sr-only">(current)</span>
+              <?php endif; ?>
+            </a>
           </li>
         </ul>
       </div>
