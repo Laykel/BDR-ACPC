@@ -14,7 +14,7 @@ PHP version : 7.2.13
 -----------------------------------------------------------------------------------
 */
 
-// DISPLAY ERRORS - TO DELETE
+// AFFICHAGE DES ERREURS PHP - A SUPPRIMER
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
