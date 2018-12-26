@@ -58,7 +58,7 @@ if (file_exists($script)) {
   </head>
   <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
       <a class="navbar-brand" href="#">
         <img src="<?php echo ROOT; ?>/assets/img/logo.png" width="30" height="30" alt="logo">
       </a>
@@ -82,31 +82,6 @@ if (file_exists($script)) {
             <a class="nav-link" href="#">About</a>
           </li>
         </ul>
-      </div>
-    </nav>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="<?php echo URL;?>">ACPC</a>
-        </div>
-
-        <!-- Main navbar -->
-        <div class="collapse navbar-collapse" id="navbar">
-          <ul class="nav navbar-nav">
-            <li class="<?php if($page=='home') echo 'active';?>">
-              <a href="<?php echo URL;?>?page=home">Projets</a>
-            </li>
-            <li class="<?php if($page=='journal') echo 'active';?>">
-              <a href="<?php echo URL;?>?page=journal">Journal</a>
-            </li>
-          </ul>
-        </div>
       </div>
     </nav>
     <!-- End of navigation -->
