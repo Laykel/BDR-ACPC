@@ -53,11 +53,37 @@ if (file_exists($script)) {
     <link href="<?php echo ROOT;?>/assets/css/ACPC-style.css" rel="stylesheet" type="text/css"/>
 
     <!-- JavaScript libraries -->
-    <script type="text/javascript" src="<?php //echo ROOT;?>/assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php //echo ROOT;?>/assets/js/bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="<?php echo ROOT;?>/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo ROOT;?>/assets/js/bootstrap.bundle.min.js" defer></script>
   </head>
   <body>
     <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img src="<?php echo ROOT; ?>/assets/img/logo.png" width="30" height="30" alt="logo">
+      </a>
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarColor03">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home<?php if($page=='home') : ?><span class="sr-only">(current)</span><?php endif; ?></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
