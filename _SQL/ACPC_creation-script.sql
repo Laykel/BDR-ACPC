@@ -90,16 +90,8 @@ CREATE TABLE CarteMere_Port (
 CREATE TABLE Composant (
      noSerie BIGINT NOT NULL,
      nom VARCHAR(200) NOT NULL,
-     prix FLOAT(10) NOT NULL,
-     Refroidisseur BIGINT,
-     Processeur BIGINT,
-     MemoireVive BIGINT,
-     MemoireMorte BIGINT,
-     CarteMere BIGINT,
-     CarteGraphique BIGINT,
-     Boitier BIGINT,
-     Alimentation BIGINT,
-     constructeurNom VARCHAR(100),
+     prix DECIMAL(7,2) NOT NULL,
+     nomConstructeur VARCHAR(100),
      CONSTRAINT PK_Composant PRIMARY KEY (noSerie));
 
 CREATE TABLE ConnecteurAlim (
@@ -137,8 +129,6 @@ CREATE TABLE MemoireMorte (
      capacite INT NOT NULL,
      typeEmplacementMemoireMorte DECIMAL(5,2) NOT NULL,
      typeConnecteurAlim VARCHAR(20) NOT NULL,
-     SSD BIGINT,
-     HDD BIGINT,
      CONSTRAINT PK_MemoireMorte PRIMARY KEY (noSerieComposant));
 
 CREATE TABLE MemoireVive (
@@ -490,29 +480,6 @@ ALTER TABLE PuceGraphique ADD CONSTRAINT UC_PuceGraphique_nomConstructeur
 
 ALTER TABLE Refroidisseur_Socket ADD CONSTRAINT UC_Refroidisseur_Socket_nomSocket
      UNIQUE (nomSocket);
-
-
--- CHECKS
--- ___________
-
--- Not implemented
--- ALTER TABLE CarteMere ADD CONSTRAINT FKCom_Car_1_CHK
---     CHECK(exists(SELECT * FROM TypeRAM
---                  WHERE TypeRAM.noSerieCarteMere = noSerieComposant));
-
-ALTER TABLE MemoireMorte ADD CONSTRAINT EXTONE_MemoireMorte
-     CHECK((HDD IS NOT NULL AND SSD IS NULL)
-           OR (HDD IS NULL AND SSD IS NOT NULL));
-
-ALTER TABLE Composant ADD CONSTRAINT EXTONE_Composant
-     CHECK((Boitier IS NOT NULL AND Alimentation IS NULL AND Refroidisseur IS NULL AND CarteGraphique IS NULL AND MemoireMorte IS NULL AND MemoireVive IS NULL AND Processeur IS NULL AND CarteMere IS NULL)
-           OR (Boitier IS NULL AND Alimentation IS NOT NULL AND Refroidisseur IS NULL AND CarteGraphique IS NULL AND MemoireMorte IS NULL AND MemoireVive IS NULL AND Processeur IS NULL AND CarteMere IS NULL)
-           OR (Boitier IS NULL AND Alimentation IS NULL AND Refroidisseur IS NOT NULL AND CarteGraphique IS NULL AND MemoireMorte IS NULL AND MemoireVive IS NULL AND Processeur IS NULL AND CarteMere IS NULL)
-           OR (Boitier IS NULL AND Alimentation IS NULL AND Refroidisseur IS NULL AND CarteGraphique IS NOT NULL AND MemoireMorte IS NULL AND MemoireVive IS NULL AND Processeur IS NULL AND CarteMere IS NULL)
-           OR (Boitier IS NULL AND Alimentation IS NULL AND Refroidisseur IS NULL AND CarteGraphique IS NULL AND MemoireMorte IS NOT NULL AND MemoireVive IS NULL AND Processeur IS NULL AND CarteMere IS NULL)
-           OR (Boitier IS NULL AND Alimentation IS NULL AND Refroidisseur IS NULL AND CarteGraphique IS NULL AND MemoireMorte IS NULL AND MemoireVive IS NOT NULL AND Processeur IS NULL AND CarteMere IS NULL)
-           OR (Boitier IS NULL AND Alimentation IS NULL AND Refroidisseur IS NULL AND CarteGraphique IS NULL AND MemoireMorte IS NULL AND MemoireVive IS NULL AND Processeur IS NOT NULL AND CarteMere IS NULL)
-           OR (Boitier IS NULL AND Alimentation IS NULL AND Refroidisseur IS NULL AND CarteGraphique IS NULL AND MemoireMorte IS NULL AND MemoireVive IS NULL AND Processeur IS NULL AND CarteMere IS NOT NULL));
 
 
 -- Index Section
