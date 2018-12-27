@@ -103,8 +103,8 @@ CREATE TABLE Composant (
      CONSTRAINT PK_Composant PRIMARY KEY (noSerie));
 
 CREATE TABLE ConnecteurAlim (
-     `type` VARCHAR(20) NOT NULL,
-     CONSTRAINT PK_ConnecteurAlim PRIMARY KEY  (`type`));
+     type VARCHAR(20) NOT NULL,
+     CONSTRAINT PK_ConnecteurAlim PRIMARY KEY  (type));
 
 CREATE TABLE ConnecteurMemoireVive (
      connecteur VARCHAR(20) NOT NULL,
@@ -119,12 +119,12 @@ CREATE TABLE EmplacementCarteGraphique (
      CONSTRAINT PK_EmplacementCarteGraphique PRIMARY KEY (connecteur));
 
 CREATE TABLE EmplacementMemoireMorte (
-     `type` DECIMAL(5,2) NOT NULL,
-     CONSTRAINT PK_EmplacementMemoireMorte PRIMARY KEY  (`type`));
+     type DECIMAL(5,2) NOT NULL,
+     CONSTRAINT PK_EmplacementMemoireMorte PRIMARY KEY  (type));
 
 CREATE TABLE FacteurForme (
-     `type` VARCHAR(20) NOT NULL,
-     CONSTRAINT PK_FacteurForme PRIMARY KEY  (`type`));
+     type VARCHAR(20) NOT NULL,
+     CONSTRAINT PK_FacteurForme PRIMARY KEY  (type));
 
 CREATE TABLE HDD (
      noSerieComposantMemoireMorte BIGINT NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE HDD (
 
 CREATE TABLE MemoireMorte (
      noSerieComposant BIGINT NOT NULL,
-     `type` VARCHAR(10) NOT NULL,
+     type VARCHAR(10) NOT NULL,
      capacite INT NOT NULL,
      typeEmplacementMemoireMorte DECIMAL(5,2) NOT NULL,
      typeConnecteurAlim VARCHAR(20) NOT NULL,
@@ -143,13 +143,13 @@ CREATE TABLE MemoireMorte (
 
 CREATE TABLE MemoireVive (
      noSerieComposant BIGINT NOT NULL,
-     `type` VARCHAR(20) NOT NULL,
+     type VARCHAR(20) NOT NULL,
      frequence VARCHAR(20) NOT NULL,
      ECC TINYINT NOT NULL DEFAULT 0,
      connecteurConnecteurMemoireVive VARCHAR(20) NOT NULL,
      CONSTRAINT PK_MemoireVive PRIMARY KEY (noSerieComposant));
 
-CREATE TABLE `Port` (
+CREATE TABLE Port (
      nom VARCHAR(20) NOT NULL,
      CONSTRAINT PK_Port PRIMARY KEY (nom));
 
@@ -180,7 +180,7 @@ CREATE TABLE Refroidisseur_Socket (
      nomSocket VARCHAR(20) NOT NULL,
      CONSTRAINT PK_Refroidisseur_Socket PRIMARY KEY (nomSocket, noSerieRefroidisseur));
 
-CREATE TABLE `Socket` (
+CREATE TABLE Socket (
      nom VARCHAR(20) NOT NULL,
      CONSTRAINT PK_Socket PRIMARY KEY (nom));
 
@@ -207,13 +207,13 @@ ALTER TABLE Alimentation ADD CONSTRAINT FK_Alimentation_noSerieComposant
 
 ALTER TABLE Alimentation ADD CONSTRAINT FK_Alimentation_typeFacteurForme
      FOREIGN KEY (typeFacteurForme)
-     REFERENCES FacteurForme  (`type`)
+     REFERENCES FacteurForme  (type)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE Alimentation_ConnecteurAlim ADD CONSTRAINT FK_Alimentation_ConnecteurAlim_typeConnecteurAlim
      FOREIGN KEY (typeConnecteurAlim)
-     REFERENCES ConnecteurAlim  (`type`)
+     REFERENCES ConnecteurAlim  (type)
      ON DELETE CASCADE
      ON UPDATE CASCADE;
 
@@ -231,7 +231,7 @@ ALTER TABLE Boitier ADD CONSTRAINT FK_Boitier_noSerieComposant
 
 ALTER TABLE Boitier_EmplacementMemoireMorte ADD CONSTRAINT FK_Boitier_EmplacementMemoireMorte_typeEmplacementMemoireMorte
      FOREIGN KEY (typeEmplacementMemoireMorte)
-     REFERENCES EmplacementMemoireMorte (`type`)
+     REFERENCES EmplacementMemoireMorte (type)
      ON DELETE CASCADE
      ON UPDATE CASCADE;
 
@@ -243,7 +243,7 @@ ALTER TABLE Boitier_EmplacementMemoireMorte ADD CONSTRAINT FK_Boitier_Emplacemen
 
 ALTER TABLE Boitier_FacteurForme ADD CONSTRAINT FK_Boitier_FacteurForme_typeFacteurForme
      FOREIGN KEY (typeFacteurForme)
-     REFERENCES FacteurForme  (`type`)
+     REFERENCES FacteurForme  (type)
      ON DELETE CASCADE
      ON UPDATE CASCADE;
 
@@ -285,7 +285,7 @@ ALTER TABLE CarteGraphique_Port ADD CONSTRAINT FK_CarteGraphique_Port_noSerieCar
 
 ALTER TABLE CarteGraphique_ConnecteurAlim ADD CONSTRAINT FK_CarteGraphique_ConnecteurAlim_typeConnecteurAlim
      FOREIGN KEY (typeConnecteurAlim)
-     REFERENCES ConnecteurAlim  (`type`)
+     REFERENCES ConnecteurAlim  (type)
      ON DELETE CASCADE
      ON UPDATE CASCADE;
 
@@ -303,7 +303,7 @@ ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_noSerieComposant
 
 ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_typeFacteurForme
      FOREIGN KEY (typeFacteurForme)
-     REFERENCES FacteurForme  (`type`)
+     REFERENCES FacteurForme  (type)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
@@ -321,13 +321,13 @@ ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_connecteurEmplacementCarteGrap
 
 ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_nomSocket
      FOREIGN KEY (nomSocket)
-     REFERENCES `Socket` (nom)
+     REFERENCES Socket (nom)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE CarteMere_Port ADD CONSTRAINT FK_CarteMere_Port_nomPort
      FOREIGN KEY (nomPort)
-     REFERENCES `Port` (nom)
+     REFERENCES Port (nom)
      ON DELETE CASCADE
      ON UPDATE CASCADE;
 
@@ -357,13 +357,13 @@ ALTER TABLE MemoireMorte ADD CONSTRAINT FK_MemoireMorte_noSerieComposant
 
 ALTER TABLE MemoireMorte ADD CONSTRAINT FK_MemoireMorte_typeEmplacementMemoireMorte
      FOREIGN KEY (typeEmplacementMemoireMorte)
-     REFERENCES EmplacementMemoireMorte  (`type`)
+     REFERENCES EmplacementMemoireMorte  (type)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
 ALTER TABLE MemoireMorte ADD CONSTRAINT FK_MemoireMorte_typeConnecteurAlim
      FOREIGN KEY (typeConnecteurAlim)
-     REFERENCES ConnecteurAlim  (`type`)
+     REFERENCES ConnecteurAlim  (type)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
@@ -387,7 +387,7 @@ ALTER TABLE Processeur ADD CONSTRAINT FK_Processeur_noSerieComposant
 
 ALTER TABLE Processeur ADD CONSTRAINT FK_Processeur_nomSocket
      FOREIGN KEY (nomSocket)
-     REFERENCES `Socket` (nom)
+     REFERENCES Socket (nom)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
@@ -405,7 +405,7 @@ ALTER TABLE Refroidisseur ADD CONSTRAINT FK_Refroidisseur_noSerieComposant
 
 ALTER TABLE Refroidisseur_Socket ADD CONSTRAINT FK_Refroidisseur_Socket_nomSocket
      FOREIGN KEY (nomSocket)
-     REFERENCES `Socket` (nom)
+     REFERENCES Socket (nom)
      ON DELETE CASCADE
      ON UPDATE CASCADE;
 
@@ -594,7 +594,7 @@ CREATE INDEX FKfabrique_IND
      ON Composant (constructeurNom);
 
 CREATE UNIQUE INDEX ID_ConnecteurAlim_IND
-     ON ConnecteurAlim  (`type`);
+     ON ConnecteurAlim  (type);
 
 CREATE UNIQUE INDEX ID_ConnecteurMemoireVive_IND
      ON ConnecteurMemoireVive (connecteur);
@@ -606,10 +606,10 @@ CREATE UNIQUE INDEX ID_EmplacementCarteGraphique_IND
      ON EmplacementCarteGraphique (connecteur);
 
 CREATE UNIQUE INDEX ID_EmplacementMemoireMorte_IND
-     ON EmplacementMemoireMorte  (`type`);
+     ON EmplacementMemoireMorte  (type);
 
 CREATE UNIQUE INDEX ID_FacteurForme_IND
-     ON FacteurForme  (`type`);
+     ON FacteurForme  (type);
 
 CREATE UNIQUE INDEX FKMem_HDD_IND
      ON HDD (noSerieComposantMemoireMorte);
