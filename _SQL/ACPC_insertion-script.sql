@@ -9,8 +9,8 @@
 INSERT INTO `ACPC`.`Constructeur`
 (`nom`)
 VALUES
-('MSI'), ('Cooler Master'), ('Asus'), ('Intel'), ('NVidia'), ('HyperX'), ('Samsung'),
-('Western Digital'), ('BitFenix');
+('MSI'), ('Cooler Master'), ('Asus'), ('Intel'), ('NVidia'), ('HyperX'),
+('Samsung'), ('Western Digital'), ('BitFenix');
 
 -- J'utilise ici noSerie comme un ID auto-incrémenté... à voir.
 INSERT INTO `ACPC`.`Composant`
@@ -36,7 +36,8 @@ VALUES
 INSERT INTO `ACPC`.`ConnecteurAlim`
 (`type`)
 VALUES
-('20+4-pin ATX'), ('4+4-pin 12V'), ('4-pin Molex'), ('4-pin Floppy'), ('15-pin S-ATA'), ('6+2 broches PCIe');
+('20+4-pin ATX'), ('4+4-pin 12V'), ('4-pin Molex'), ('4-pin Floppy'),
+('15-pin S-ATA'), ('6+2 broches PCIe');
 
 INSERT INTO `ACPC`.`Alimentation`
 (`noSerieComposant`,
@@ -125,8 +126,8 @@ VALUES
 INSERT INTO `ACPC`.`Socket`
 (`nom`)
 VALUES
-('LGA 775'), ('LGA 1366'), ('FM1'), ('LGA 1156'), ('LGA 1155'), ('LGA 2011'), ('LGA 1150'),
-('LGA 2011-v3'), ('LGA 1151');
+('LGA 775'), ('LGA 1366'), ('FM1'), ('LGA 1156'), ('LGA 1155'), ('LGA 2011'),
+('LGA 1150'), ('LGA 2011-v3'), ('LGA 1151');
 
 INSERT INTO `ACPC`.`ConnecteurMemoireVive`
 (`connecteur`)
@@ -218,5 +219,5 @@ INSERT INTO `ACPC`.`Refroidisseur_Socket`
 (`noSerieRefroidisseur`,
  `nomSocket`)
 VALUES
-(8, 'LGA 775'), (8, 'LGA 1366'), (8, 'FM1'), (8, 'LGA 1156'), (8, 'LGA 1155'), (8, 'LGA 2011'),
-(8, 'LGA 1150'), (8, 'LGA 2011-v3'), (8, 'LGA 1151');
+(8, 'LGA 775'), (8, 'LGA 1366'), (8, 'FM1'), (8, 'LGA 1156'), (8, 'LGA 1155'),
+(8, 'LGA 2011'), (8, 'LGA 1150'), (8, 'LGA 2011-v3'), (8, 'LGA 1151');
