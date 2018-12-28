@@ -8,4 +8,7 @@
 //---------------------------------------------------------------
 
 $title = "ACPC - Accueil";
+
+$req = "SELECT * FROM Composant";
+$test = dbRequest($req, 'select');
 ?>
