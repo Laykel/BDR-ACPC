@@ -15,8 +15,8 @@ VALUES
 -- J'utilise ici noSerie comme un ID auto-incrémenté... à voir.
 INSERT INTO `ACPC`.`Composant`
 (`nom`,
-`prix`,
-`nomConstructeur`)
+ `prix`,
+ `nomConstructeur`)
 VALUES
 ('Z97S SLI Krait Edition', 132, 'MSI'),
 ('Core i5 4690K', 257, 'Intel'),
@@ -40,8 +40,8 @@ VALUES
 
 INSERT INTO `ACPC`.`Alimentation`
 (`noSerieComposant`,
-`puissance`,
-`typeFacteurForme`)
+ `puissance`,
+ `typeFacteurForme`)
 VALUES
 (7, 750, 'ATX');
 
@@ -49,7 +49,7 @@ VALUES
 -- On a 8 (7, '15-pin S-ATA')...
 INSERT INTO `ACPC`.`Alimentation_ConnecteurAlim`
 (`noSerieAlimentation`,
-`typeConnecteurAlim`)
+ `typeConnecteurAlim`)
 VALUES
 (7, '20+4-pin ATX'), (7, '4+4-pin 12V'), (7, '4-pin Molex'), (7, '4-pin Floppy'),
 (7, '15-pin S-ATA'), (7, '6+2 broches PCIe');
@@ -61,28 +61,28 @@ VALUES
 
 INSERT INTO `ACPC`.`Boitier`
 (`noSerieComposant`,
-`hauteur`,
-`largeur`,
-`profondeur`)
+ `hauteur`,
+ `largeur`,
+ `profondeur`)
 VALUES
 (9, 43.7, 46.5, 18.3);
 
 INSERT INTO `ACPC`.`Boitier_FacteurForme`
 (`noSerieBoitier`,
-`typeFacteurForme`)
+ `typeFacteurForme`)
 VALUES
 (9, 'ATX'), (9, 'mATX'), (9, 'Mini ITX');
 
 -- Pareil, nbrEmplacement !!
 INSERT INTO `ACPC`.`Boitier_EmplacementMemoireMorte`
 (`noSerieBoitier`,
-`typeEmplacementMemoireMorte`)
+ `typeEmplacementMemoireMorte`)
 VALUES
 (9, 2.5), (9, 3.5), (9, 5.25);
 
 INSERT INTO `ACPC`.`PuceGraphique`
 (`nom`,
-`nomConstructeur`)
+ `nomConstructeur`)
 VALUES
 ('GeForce GTX 1070', 'NVidia');
 
@@ -98,27 +98,27 @@ VALUES
 
 INSERT INTO `ACPC`.`CarteGraphique`
 (`noSerieComposant`,
-`frequencePuceGraphique`,
-`typeMemoireGraphique`,
-`capaciteMemoireGraphique`,
-`largeur`,
-`profondeur`,
-`nbEmplacementSurBoitier`,
-`connecteurEmplacementCarteGraphique`,
-`nomPuceGraphique`)
+ `frequencePuceGraphique`,
+ `typeMemoireGraphique`,
+ `capaciteMemoireGraphique`,
+ `largeur`,
+ `profondeur`,
+ `nbEmplacementSurBoitier`,
+ `connecteurEmplacementCarteGraphique`,
+ `nomPuceGraphique`)
 VALUES
 (3, 1657, 'GDDR5', 8, 29.8, 13.4, 2, 'PCIe x16', 'GeForce GTX 1070');
 
 INSERT INTO `ACPC`.`CarteGraphique_ConnecteurAlim`
 (`noSerieCarteGraphique`,
-`typeConnecteurAlim`)
+ `typeConnecteurAlim`)
 VALUES
 (3, '6+2 broches PCIe');
 
 -- Pareil, nbrPorts !!
 INSERT INTO `ACPC`.`CarteGraphique_Port`
 (`noSerieCarteGraphique`,
-`nomPort`)
+ `nomPort`)
 VALUES
 (3, 'HDMI'), (3, 'DisplayPort'), (3, 'DVI-D');
 
@@ -136,15 +136,15 @@ VALUES
 -- On ne stocke pas quel type d'emplacements carte graphique la carte mère a.
 INSERT INTO `ACPC`.`CarteMere`
 (`noSerieComposant`,
-`nbEmplacementsRAM`,
-`capaciteRAMMax`,
-`chipset`,
-`frequenceRAMMax`,
-`nbEmplacementsPCIe`,
-`typeFacteurForme`,
-`connecteurConnecteurMemoireVive`,
-`connecteurEmplacementCarteGraphique`,
-`nomSocket`)
+ `nbEmplacementsRAM`,
+ `capaciteRAMMax`,
+ `chipset`,
+ `frequenceRAMMax`,
+ `nbEmplacementsPCIe`,
+ `typeFacteurForme`,
+ `connecteurConnecteurMemoireVive`,
+ `connecteurEmplacementCarteGraphique`,
+ `nomSocket`)
 VALUES
 (1, 4, 32, 'Z97', 3200, 5, 'ATX', 'DIMM 240', 'PCIe x16', 'LGA 1150');
 
@@ -152,7 +152,7 @@ VALUES
 -- Est-ce qu'on met les autres ports (ethernet, USB, ...) ?
 INSERT INTO `ACPC`.`CarteMere_Port`
 (`noSerieCarteMere`,
-`nomPort`)
+ `nomPort`)
 VALUES
 (1, 'HDMI'), (1, 'DVI-D'), (1, 'VGA');
 
@@ -160,63 +160,63 @@ VALUES
 -- En plus, on n'a pas de table avec les types de mémoires vives.
 INSERT INTO `ACPC`.`TypeRAM`
 (`noSerieCarteMere`,
-`typeRAM`)
+ `typeRAM`)
 VALUES
 (1, 'DDR3');
 
 INSERT INTO `ACPC`.`MemoireMorte`
 (`noSerieComposant`,
-`type`,
-`capacite`,
-`typeEmplacementMemoireMorte`,
-`typeConnecteurAlim`)
+ `type`,
+ `capacite`,
+ `typeEmplacementMemoireMorte`,
+ `typeConnecteurAlim`)
 VALUES
 (5, 'SSD', 120, 2.5, '15-pin S-ATA'), (6, 'HDD', 1000, 3.5, '15-pin S-ATA');
 
 INSERT INTO `ACPC`.`HDD`
 (`noSerieComposantMemoireMorte`,
-`nbToursParMinuteMax`)
+ `nbToursParMinuteMax`)
 VALUES
 (6, 7200);
 
 INSERT INTO `ACPC`.`SSD`
 (`noSerieComposantMemoireMorte`,
-`vitesseEcriture`,
-`vitesseLecture`)
+ `vitesseEcriture`,
+ `vitesseLecture`)
 VALUES
 (5, 520, 550);
 
 INSERT INTO `ACPC`.`MemoireVive`
 (`noSerieComposant`,
-`type`,
-`frequence`,
-`ECC`,
-`connecteurConnecteurMemoireVive`)
+ `type`,
+ `frequence`,
+ `ECC`,
+ `connecteurConnecteurMemoireVive`)
 VALUES
 (4, 'DDR3', 1600, 0, 'DIMM 240');
 
 INSERT INTO `ACPC`.`Processeur`
 (`noSerieComposant`,
-`nbCoeurs`,
-`frequence`,
-`frequenceMax`,
-`ECC`,
-`mutliThreading`,
-`nomSocket`)
+ `nbCoeurs`,
+ `frequence`,
+ `frequenceMax`,
+ `ECC`,
+ `mutliThreading`,
+ `nomSocket`)
 VALUES
 (2, 4, 3.5, 3.9, 0, 0, 'LGA 1150');
 
 INSERT INTO `ACPC`.`Refroidisseur`
 (`noSerieComposant`,
-`hauteur`,
-`refroidissementLiquide`,
-`helice`)
+ `hauteur`,
+ `refroidissementLiquide`,
+ `helice`)
 VALUES
 (8, 15.9, 0, 1);
 
 INSERT INTO `ACPC`.`Refroidisseur_Socket`
 (`noSerieRefroidisseur`,
-`nomSocket`)
+ `nomSocket`)
 VALUES
 (8, 'LGA 775'), (8, 'LGA 1366'), (8, 'FM1'), (8, 'LGA 1156'), (8, 'LGA 1155'), (8, 'LGA 2011'),
 (8, 'LGA 1150'), (8, 'LGA 2011-v3'), (8, 'LGA 1151');
