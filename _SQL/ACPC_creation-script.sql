@@ -460,14 +460,16 @@ ALTER TABLE CarteMere ADD CONSTRAINT UC_CarteMere_nomSocket
 ALTER TABLE CarteMere_Port ADD CONSTRAINT UC_CarteMere_Port_nomPort
      UNIQUE (nomPort);
 
-ALTER TABLE Composant ADD CONSTRAINT UC_Composant_nomConstructeur
-     UNIQUE (nomConstructeur);
+-- POURQUOI ?
+-- ALTER TABLE Composant ADD CONSTRAINT UC_Composant_nomConstructeur
+--     UNIQUE (nomConstructeur);
 
 ALTER TABLE MemoireMorte ADD CONSTRAINT UC_MemoireMorte_typeEmplacementMemoireMorte
      UNIQUE (typeEmplacementMemoireMorte);
 
-ALTER TABLE MemoireMorte ADD CONSTRAINT UC_MemoireMorte_typeConnecteurAlim
-     UNIQUE (typeConnecteurAlim);
+-- POURQUOI ?
+-- ALTER TABLE MemoireMorte ADD CONSTRAINT UC_MemoireMorte_typeConnecteurAlim
+       UNIQUE (typeConnecteurAlim);
 
 ALTER TABLE MemoireVive ADD CONSTRAINT UC_MemoireVive_connecteurConnecteurMemoireVive
      UNIQUE (connecteurConnecteurMemoireVive);
