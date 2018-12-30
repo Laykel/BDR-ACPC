@@ -422,6 +422,10 @@ ALTER TABLE TypeRAM ADD CONSTRAINT FK_TypeRAM_noCarteMere
      ON DELETE CASCADE
      ON UPDATE CASCADE;
 
+-- Unicity constraints
+-- ___________
+ALTER TABLE Composant ADD CONSTRAINT UC_Composant_nom
+     UNIQUE (nom);
 
 -- Index Section
 -- _____________
