@@ -4,7 +4,21 @@ CONFIGURATIONS GLOBALES
 =======================
 */
 body{
-    margin-top: 120px;
+    padding-top: 120px;
+}
+
+/*
+=====
+FONTS
+=====
+ */
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('../fonts/glyphicons-halflings-regular.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/glyphicons-halflings-regular.woff') format('woff'), /* Pretty Modern Browsers */
+         url('../fonts/glyphicons-halflings-regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/glyphicons-halflings-regular.svg') format('svg'); /* Legacy iOS */
 }
 
 /*
@@ -40,8 +54,69 @@ NAVIGATION
 }
 
 .navbar .nav-item .nav-link:hover {
-    color : #2D7CBE !important;
+    color: #2D7CBE !important;
 }
 
+/*
+=================
+COLLAPSIBLE PANEL
+=================
+ */
+.panel-group {
+    margin-top: 20px;
+}
+
+.panel {
+    border: #2D7CBE 2px solid;
+    border-radius: 7px;
+}
+
+.panel-heading {
+    background-color: #2D7CBE;
+    padding: 0;
+    border: 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.panel-title {
+    margin-bottom: 0;
+}
+
+.panel-title > a, .panel-title > a:active {
+    display: block;
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    word-spacing: 3px;
+    text-decoration: none;
+}
+
+.panel-heading a:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e138";
+    float: left;
+    padding-right: 10px;
+    padding-top: 1px;
+}
+
+.panel-heading  a:before {
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    transition: all 0.5s;
+}
+
+.panel-heading.active a:before {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.panel-body {
+    margin: 10px;
+}
 
 
