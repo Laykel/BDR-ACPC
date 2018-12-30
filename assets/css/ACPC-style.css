@@ -64,6 +64,7 @@ COLLAPSIBLE PANEL
  */
 .panel-group {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .panel {
@@ -119,4 +120,23 @@ COLLAPSIBLE PANEL
     margin: 10px;
 }
 
+/*
+===========
+FILTRE FORM
+===========
+ */
+#filtre-form div.custom-radio {
+    margin-top: 8px;
+}
 
+#filtre-form div.form-group {
+    margin-bottom: 0px;
+}
+
+#filtre-form .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #2D7CBE;
+}
+
+#filtre-form button {
+    background-color: #2D7CBE;
+}

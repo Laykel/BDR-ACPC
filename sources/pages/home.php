@@ -20,7 +20,33 @@ Description: Projects page: Projects and tasks, timers, update details.
       </div>
       <div id="collapseFiltre" class="panel-collapse collapse in show" role="tabpanel">
         <div class="panel-body">
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+          <form  id="filtre-form">
+            <div class="form-group row">
+              <label for="PCTypeRadio" class="col-sm-6 col-form-label text-right">Sélectionnez le type de PC : </label>
+              <div class="col-sm-6">
+                <div class="custom-radio form-check form-check-inline">
+                  <input type="radio" id="radio-bureautique" name="PCTypeRadio"
+                         class="custom-control-input form-check-input" checked="">
+                  <label class="custom-control-label form-check-label" for="radio-bureautique">Bureautique</label>
+                </div>
+                <div class="custom-radio form-check form-check-inline">
+                  <input type="radio" id="radio-gaming" name="PCTypeRadio"
+                         class="custom-control-input form-check-input">
+                  <label class="custom-control-label form-check-label" for="radio-gaming">Gaming</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="PCBudgetInput" class="col-sm-6 col-form-label text-right">Budget maximum (CHF) : </label>
+              <input type="text" class="form-control col-sm-5 col-lg-3 col-md-4"
+                     placeholder="Aucune limite fixée" id="PCBudgetInput">
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 offset-md-6 offset-sm-6" style="padding: 10px 0 0 0;">
+                <button type="submit" class="btn btn-primary">Appliquer</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
