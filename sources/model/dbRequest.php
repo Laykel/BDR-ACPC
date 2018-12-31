@@ -11,7 +11,7 @@
 function dbRequest($req, $type_req) {
     try {
         // Connection to the tasking database
-        $connect = new PDO('mysql:host=localhost; dbname=ACPC;charset=utf8', 'acpcUser', 'AcPcP455w0rd');
+        $connect = new PDO('mysql:host=172.17.0.2; dbname=ACPC;charset=utf8', 'acpcUser', 'AcPcP455w0rd');
 
         // Allows to get more information from errors
         $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
