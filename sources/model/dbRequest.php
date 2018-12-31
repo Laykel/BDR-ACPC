@@ -1,38 +1,52 @@
 <?php
-//------------------------------------------------------------------------
-// Filename: dbRequest.php
-// Creation date: 26.12.2018
-// Author: Luc Wachter
-// Function: Handles request to the database
-//------------------------------------------------------------------------
+/*
+-----------------------------------------------------------------------------------
+Projet      : ACPC
+Fichier     : dbRequest.php
+Auteur(s)   : Gilliand Loris - Tutic Mateo - Wachter Luc
+Date        : 26.12.2018
 
-// Function to handle every DB call, through PDO
-// Returns DB data in case of SELECT, ID in case of insert
+But         : Définit la fonction gérant les requêtes à la base de données
+
+Remarque(s) : La valeur de retour de dbRequest est un objet PDOStatement dans
+              le cas d'un insert, mais un simple int sinon
+
+PHP version : 7.2.13
+-----------------------------------------------------------------------------------
+*/
+
+// Retourne les données de la BD dans le cas d'un SELECT
+// et l'id du résultat dans le cas d'un INSERT ou d'un UPDATE
 function dbRequest($req, $type_req) {
-    try {
-        // Connection to the tasking database
-        $connect = new PDO('mysql:host=mysql001; dbname=ACPC;charset=utf8', 'acpcUser', 'AcPcP455w0rd');
+    $host   = 'mysql001';
+    $dbname = 'ACPC';
+    $user   = 'acpcUser';
+    $pwd    = 'AcPcP455w0rd';
 
-        // Allows to get more information from errors
-        $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        // Connection à la base de données avec le driver PDO
+        $connection = new PDO("mysql:host=$host; dbname=$dbname;charset=utf8", $user, $pwd);
+
+        // Afficher les erreurs
+        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     catch (Exception $e) {
-        echo 'There was an error : '.$e->getMessage();
+        echo 'Il y a eu une erreur : '.$e->getMessage();
         die();
     }
 
-    // Execution of the request
+    // Exécution de la requête
     if ($type_req == 'select') {
-        // Execute a select request
-        $res = $connect->query($req);
+        // Exécution d'une requête SELECT
+        $res = $connection->query($req);
     }
     else {
-        // Execute a non-select request
-        if (false === $connect->exec($req)) {
+        // Exécution d'une requête non SELECT
+        if (false === $connection->exec($req)) {
             return false;
         }
-        // Set return value to the last inserted ID
-        $res = $connect->lastInsertId();
+        // La valeur de retour est l'id de la ligne insérée
+        $res = $connection->lastInsertId();
     }
 
     return $res;

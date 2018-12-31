@@ -1,6 +1,5 @@
 <!--
 Filename: home.php
-Description: Projects page: Projects and tasks, timers, update details.
 -->
 
 <div class="wrapper center-block">
