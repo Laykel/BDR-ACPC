@@ -18,25 +18,27 @@ PHP version : 7.2.13
 // Retourne les données de la BD dans le cas d'un SELECT
 // et l'id du résultat dans le cas d'un INSERT ou d'un UPDATE
 function dbRequest($req, $type_req) {
-    $host   = 'mysql001';
-    $dbname = 'ACPC';
-    $user   = 'acpcUser';
-    $pwd    = 'AcPcP455w0rd';
+    $host   = "mysql001";
+    $dbname = "ACPC";
+    $user   = "acpcUser";
+    $pwd    = "AcPcP455w0rd";
 
     try {
         // Connection à la base de données avec le driver PDO
-        $connection = new PDO("mysql:host=$host; dbname=$dbname;charset=utf8", $user, $pwd);
+        $connection = new PDO("mysql:host=$host; dbname=$dbname; charset=utf8", $user, $pwd);
 
-        // Afficher les erreurs
+        // Traiter les erreurs comme des exceptions
         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        // Les résultats sont sous la forme d'un tableau associatif
+        $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }
     catch (Exception $e) {
-        echo 'Il y a eu une erreur : '.$e->getMessage();
+        echo "Erreur lors de la connexion à la base de données : ".$e->getMessage();
         die();
     }
 
     // Exécution de la requête
-    if ($type_req == 'select') {
+    if ($type_req == "select") {
         // Exécution d'une requête SELECT
         $res = $connection->query($req);
     }
