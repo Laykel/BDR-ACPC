@@ -133,7 +133,6 @@ INSERT INTO `ACPC`.`ConnecteurMemoireVive`
 VALUES
 ('DIMM 184'), ('DIMM 240'), ('SODIMM 200');
 
--- On ne stocke pas quel type d'emplacements carte graphique la carte mère a.
 INSERT INTO `ACPC`.`CarteMere`
 (`noComposant`,
  `nbEmplacementsRAM`,
@@ -148,7 +147,6 @@ INSERT INTO `ACPC`.`CarteMere`
 VALUES
 (1, 4, 32, 'Z97', 3200, 5, 'ATX', 'DIMM 240', 'PCIe x16', 'LGA 1150');
 
--- Est-ce qu'on met les autres ports (ethernet, USB, ...) ?
 INSERT INTO `ACPC`.`CarteMere_Port`
 (`noCarteMere`,
  `nomPort`,
@@ -156,7 +154,6 @@ INSERT INTO `ACPC`.`CarteMere_Port`
 VALUES
 (1, 'HDMI', 1), (1, 'DVI-D', 1), (1, 'VGA', 1);
 
--- On n'a pas de table avec les types de mémoires vives.
 INSERT INTO `ACPC`.`TypeRAM`
 (`noCarteMere`,
  `typeRAM`)
@@ -165,12 +162,11 @@ VALUES
 
 INSERT INTO `ACPC`.`MemoireMorte`
 (`noComposant`,
- `type`,
  `capacite`,
  `typeEmplacementMemoireMorte`,
  `typeConnecteurAlim`)
 VALUES
-(5, 'SSD', 120, 2.5, '15-pin S-ATA'), (6, 'HDD', 1000, 3.5, '15-pin S-ATA');
+(5, 120, 2.5, '15-pin S-ATA'), (6, 1000, 3.5, '15-pin S-ATA');
 
 INSERT INTO `ACPC`.`HDD`
 (`noComposantMemoireMorte`,
