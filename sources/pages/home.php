@@ -77,7 +77,7 @@ if (isset($listeComposant)) {
               <div id="collapseComposant<?php echo $key; ?>" class="panel-collapse collapse in"
                    role="tabpanel" aria-labelledby="heading-composant-<?php echo $key; ?>">
                 <div class="panel-body">
-                  <p>Salut</p>
+                  <?php include(ROOT."/sources/pages/homeComponent.php"); ?>
                 </div>
               </div>
             </div>

@@ -1,0 +1,1 @@
+<p>Salut from homeComponent.php</p>
