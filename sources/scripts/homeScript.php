@@ -7,7 +7,18 @@
 //			gets projects and tasks data, execute changes in DB.
 //---------------------------------------------------------------
 
+var_dump($_POST);
 $title = "ACPC - Accueil";
+
+// Gestion des filtres
+if (isset($_POST['PCtype']) && isset($_POST['PCbudget'])) {
+    // TODO Prendre en compte les champs du formulaire
+
+    // Liste des composants d'un PC
+    $listeComposant = array('Mémoire morte', 'Mémoire vive', 'Carte mère', 'Carte graphique', 'Processeur',
+                            'Refroidisseur', 'Boitier', 'Alimentation');
+
+}
 
 $req = "SELECT * FROM Composant";
 $test = dbRequest($req, 'select');

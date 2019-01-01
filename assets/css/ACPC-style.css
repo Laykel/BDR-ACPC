@@ -120,6 +120,42 @@ COLLAPSIBLE PANEL
     margin: 10px;
 }
 
+
+/*
+=============================
+COLLAPSIBLE PANEL - COMPOSANT
+=============================
+ */
+#composant-titre:before {
+    font-family: 'Glyphicons Halflings';
+    content: "\e121";
+    padding-right: 10px;
+    padding-left: 10px;
+    float: left;
+}
+
+#composant-titre {
+    margin-top: 40px;
+}
+
+.composant .panel {
+    border: #FFFFFF 2px solid;
+}
+
+.composant .panel-heading {
+    border-radius: 0;
+    background-color: #FFFFFF;
+    border-bottom: #2D7CBE 2px solid;;
+}
+
+.composant .panel-title > a, .composant .panel-title > a:active {
+    color: #2D7CBE;
+}
+
+.composant .panel-heading a:after {
+    content: '';
+}
+
 /*
 ===========
 FILTRE FORM

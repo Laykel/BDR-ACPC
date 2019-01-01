@@ -2,10 +2,10 @@
 Filename: home.php
 -->
 
-<div class="wrapper center-block">
+<div class="center-block">
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
-      <div class="panel-heading active" role="tab" id="headingOne">
+      <div class="panel-heading active" role="tab" id="heading-filter">
         <h4 class="panel-title">
           <a role="button"
              data-toggle="collapse"
@@ -17,19 +17,19 @@ Filename: home.php
           </a>
         </h4>
       </div>
-      <div id="collapseFiltre" class="panel-collapse collapse in show" role="tabpanel">
+      <div id="collapseFiltre" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="heading-filter">
         <div class="panel-body">
-          <form  id="filtre-form">
+          <form  id="filtre-form" method="post">
             <div class="form-group row">
               <label for="PCTypeRadio" class="col-sm-6 col-form-label text-right">Sélectionnez le type de PC : </label>
               <div class="col-sm-6">
                 <div class="custom-radio form-check form-check-inline">
-                  <input type="radio" id="radio-bureautique" name="PCTypeRadio"
+                  <input type="radio" id="radio-bureautique" name="PCtype"
                          class="custom-control-input form-check-input" checked="">
                   <label class="custom-control-label form-check-label" for="radio-bureautique">Bureautique</label>
                 </div>
                 <div class="custom-radio form-check form-check-inline">
-                  <input type="radio" id="radio-gaming" name="PCTypeRadio"
+                  <input type="radio" id="radio-gaming" name="PCtype"
                          class="custom-control-input form-check-input">
                   <label class="custom-control-label form-check-label" for="radio-gaming">Gaming</label>
                 </div>
@@ -37,7 +37,7 @@ Filename: home.php
             </div>
             <div class="form-group row">
               <label for="PCBudgetInput" class="col-sm-6 col-form-label text-right">Budget maximum (CHF) : </label>
-              <input type="text" class="form-control col-sm-5 col-lg-3 col-md-4"
+              <input type="text" class="form-control col-sm-5 col-lg-3 col-md-4" name="PCbudget"
                      placeholder="Aucune limite fixée" id="PCBudgetInput">
             </div>
             <div class="row">
@@ -51,6 +51,42 @@ Filename: home.php
     </div>
   </div>
 </div>
+
+<?php
+if (isset($listeComposant)) {
+?>
+    <h4 id="composant-titre">Liste des composants</h4>
+<?php
+    foreach($listeComposant as $key=>$composant) {
+?>
+        <div class="center-block composant">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading-composant-<?php echo $key; ?>">
+                <h4 class="panel-title">
+                  <a role="button"
+                     data-toggle="collapse"
+                     data-parent="#accordion"
+                     href="#collapseComposant<?php echo $key; ?>"
+                     aria-expanded="true"
+                     aria-controls="collapseComposant<?php echo $key; ?>">
+                    <?php echo $composant; ?>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseComposant<?php echo $key; ?>" class="panel-collapse collapse in"
+                   role="tabpanel" aria-labelledby="heading-composant-<?php echo $key; ?>">
+                <div class="panel-body">
+                  <p>Salut</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<?php
+    }
+}
+?>
 
 <div class="row">
   <h1>Holà mundo</h1>
