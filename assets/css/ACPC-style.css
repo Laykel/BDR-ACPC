@@ -140,6 +140,7 @@ COLLAPSIBLE PANEL - COMPOSANT
 
 .composant .panel {
     border: #FFFFFF 2px solid;
+    background-color: #f5f7fa;
 }
 
 .composant .panel-heading {

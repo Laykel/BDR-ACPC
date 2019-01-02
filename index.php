@@ -51,12 +51,13 @@ if (file_exists($script)) {
 
     <link href="<?php echo ROOT;?>/assets/css/bootstrap-flatly.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo ROOT;?>/assets/css/ACPC-style.css" rel="stylesheet" type="text/css"/>
-    <link href="<?php echo ROOT;?>/assets/css/datatables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo ROOT;?>/assets/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
 
     <!-- JavaScript libraries -->
     <script type="text/javascript" src="<?php echo ROOT;?>/assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo ROOT;?>/assets/js/bootstrap.bundle.min.js" defer></script>
-    <script type="text/javascript" src="<?php echo ROOT;?>/assets/js/datatables.min.js"></script>
+    <script type="text/javascript" src="<?php echo ROOT;?>/assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="<?php echo ROOT;?>/assets/js/dataTables.bootstrap4.min.js"></script>
   </head>
   <body>
     <!-- Navigation -->
