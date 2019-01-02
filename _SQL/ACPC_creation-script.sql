@@ -130,7 +130,6 @@ CREATE TABLE HDD (
 
 CREATE TABLE MemoireMorte (
      noComposant INTEGER UNSIGNED AUTO_INCREMENT,
-     type VARCHAR(20) NOT NULL,
      capacite INTEGER NOT NULL,
      typeEmplacementMemoireMorte DECIMAL(3,2) NOT NULL,
      typeConnecteurAlim VARCHAR(20) NOT NULL,
