@@ -1,33 +1,49 @@
-<p>Composant sélectionné : -</p>
+<p class="font-weight-bold">Composant sélectionné : -</p>
 
-<table id="tbl-composant-<?php echo $key; ?>" class="table table-hover">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Prix</th>
-        </tr>
-    </thead>
-    <tbody>
-
-    </tbody>
-</table>
+<table id="tbl-composant-<?php echo $key; ?>" class="table table-hover"></table>
 
 <script>
-    // TODO Ajouter un data attribut à panel collapsible qui représente l'ID du composant et l'envoyer au script
-    // pour remplir les tableaux --> homeComponentScript.php
-
   $(function() {
-    // Lorsqu'un panel collapsible d'un composant est ouvert, fermer celui déjà ouvert
-    var $this = $('.composant').on('show.bs.collapse', function () {
-      $this.find('.collapse.show').collapse('hide');
-    });
+    //// Création du datatable
+    //var table = $('#tbl-composant-<?php //echo $key; ?>//').DataTable({
+    //  "processing": true,
+    //  "serverSide": true,
+    //  "autoWidth": false,
+    //  "ajax": {
+    //    "url": "<?php //echo ROOT."/sources/scripts/homeComponentScript.php"; ?>//",
+    //    "data": {
+    //      "composant_id": <?php //echo $key ?>
+    //    }
+    //  }
+    //});
 
-    // Tableau des composants
-    $('#tbl-composant-<?php echo $key; ?>').DataTable({
-      "processing": true,
-      "serverSide": true,
-      "autoWidth": false,
-      "ajax": "<?php echo ROOT."/sources/scripts/homeComponentScript.php"; ?>"
+    function getData() {
+      $.ajax({
+        url: '<?php echo ROOT."/sources/scripts/homeComponentScript.php"; ?>',
+        type: 'GET',
+        data: 'composant_id='+<?php echo $key ?>,
+        success: function(data) {
+          console.log(data);
+          data = JSON.parse(data);
+
+          // Création des tableaux pour chaque composant
+          if (!$.fn.DataTable.isDataTable('#tbl-composant-<?php echo $key; ?>')) {
+            $('#tbl-composant-<?php echo $key; ?>').DataTable({
+              "autoWidth": false,
+              "data": data.data,
+              "columns": data.columns,
+            });
+          }
+        }
+      });
+    }
+    // TODO : Reload les données en rappelant getData() lorsqu'un composant est sélectionné par l'utilisateur
+    getData();
+
+    // Ouverture d'un panel collapsible d'un composant
+    var panel = $('.composant').on('show.bs.collapse', function () {
+      // Fermeture des autres composants déjà ouverts
+      panel.find('.collapse.show').collapse('hide');
     });
   });
 </script>
