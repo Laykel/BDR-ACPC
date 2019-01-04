@@ -15,8 +15,8 @@ if (isset($_POST['PCtype']) && isset($_POST['PCbudget'])) {
     // TODO Prendre en compte les champs du formulaire
 
     // Liste des composants d'un PC
-    $listeComposant = array('Mémoire morte', 'Mémoire vive', 'Carte mère', 'Carte graphique', 'Processeur',
-                            'Refroidisseur', 'Boitier', 'Alimentation');
+    $listeComposant = array('Processeur', 'Carte mère', 'Mémoire vive', 'Carte graphique', 'Refroidisseur',
+                            'SSD', 'Disque dur', 'Boitier', 'Alimentation');
 
 }
 

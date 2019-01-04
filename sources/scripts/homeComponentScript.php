@@ -1,5 +1,4 @@
 <?php
-// TODO Faire les requêtes SELECT ici
 require "../model/dbRequest.php";
 
 if (isset($_GET['composant_id'])) {
@@ -7,7 +6,7 @@ if (isset($_GET['composant_id'])) {
 
     // Le composantId est à traiter en fonction du tableau $listeComposant dans homeScript.php
     switch ($composantId) {
-        case 2: // Carte mère
+        case 1: // Carte mère
             $columns = [
                 ["title" => "Nom", "data" => "nom"],
                 ["title" => "Socket", "data" => "nomSocket"],
@@ -22,8 +21,8 @@ if (isset($_GET['composant_id'])) {
                     FROM CarteMere 
                       INNER JOIN Composant 
                         ON CarteMere.noComposant = Composant.no";
-            $response = dbRequest($req, 'select');
 
+            $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
             break;
         default:
