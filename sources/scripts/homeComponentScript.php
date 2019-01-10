@@ -12,11 +12,11 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Vitesse", "data" => "frequence"],
                 ["title" => "Nombre de coeurs", "data" => "nbCoeurs"],
                 ["title" => "ECC", "data" => "ECC"],
-                ["title" => "Multi threading", "data" => "mutliThreading"], //TODO Corriger mutliThreading :)
+                ["title" => "Multi threading", "data" => "multithreading"],
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT nom, frequence, nbCoeurs, ECC, mutliThreading, prix
+            $req = "SELECT nom, frequence, nbCoeurs, ECC, multithreading, prix
                     FROM Processeur
                       INNER JOIN Composant
                         ON Processeur.noComposant = Composant.no";
@@ -31,13 +31,14 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Facteur de forme", "data" => "typeFacteurForme"],
                 ["title" => "RAM slots", "data" => "nbEmplacementsRAM"],
                 ["title" => "Max RAM", "data" => "capaciteRAMMax"],
+                ["title" => "Type RAM", "data" => "nomTypeMemoireVive"],
                 ["title" => "Constructeur", "data" => "nomConstructeur"],
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT nom, nomSocket, typeFacteurForme, nbEmplacementsRAM, capaciteRAMMax, nomConstructeur, prix 
-                    FROM CarteMere 
-                      INNER JOIN Composant 
+            $req = "SELECT nom, nomSocket, typeFacteurForme, nbEmplacementsRAM, capaciteRAMMax, nomTypeMemoireVive, nomConstructeur, prix
+                    FROM CarteMere
+                      INNER JOIN Composant
                         ON CarteMere.noComposant = Composant.no";
 
             $response = dbRequest($req, 'select');
@@ -47,12 +48,13 @@ if (isset($_GET['composant_id'])) {
             $columns = [
                 ["title" => "Nom", "data" => "nom"],
                 ["title" => "Fréquence", "data" => "frequence"],
-                ["title" => "Type", "data" => "type"],
+                ["title" => "Connecteur", "data" => "typeConnecteurMemoireVive"],
+                ["title" => "Type", "data" => "nomTypeMemoireVive"],
                 ["title" => "ECC", "data" => "ECC"],
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT nom, frequence, type, ECC, prix
+            $req = "SELECT nom, frequence, typeConnecteurMemoireVive, nomTypeMemoireVive, ECC, prix
                     FROM MemoireVive
                       INNER JOIN Composant
                         ON MemoireVive.noComposant = Composant.no";
@@ -69,7 +71,7 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT Composant.nom AS 'nomComposant', PuceGraphique.nom AS 'nomPuceGraphique', 
+            $req = "SELECT Composant.nom AS 'nomComposant', PuceGraphique.nom AS 'nomPuceGraphique',
                            capaciteMemoireGraphique, frequencePuceGraphique, prix
                     FROM CarteGraphique
                       INNER JOIN Composant
