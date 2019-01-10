@@ -17,15 +17,17 @@ INSERT INTO `ACPC`.`Composant`
  `prix`,
  `nomConstructeur`)
 VALUES
-('Z97S SLI Krait Edition', 132, 'MSI'),
-('Core i5 4690K', 257, 'Intel'),
-('GeForce GTX 1070 STRIX 8G-GAMING', 508, 'ASUS'),
+('Z97S SLI Krait Edition', 132, 'MSI'), -- carte mère
+('Core i5 4690K', 257, 'Intel'), -- CPU
+('GeForce GTX 1070 STRIX 8G-GAMING', 508, 'ASUS'), -- carte graphique
 ('Fury', 135, 'HyperX'),
 ('850 EVO Basic', 51.3, 'Samsung'),
 ('Blue', 54, 'Western Digital'),
 ('G750M', 97.9, 'Cooler Master'),
 ('Hyper 212 Evo', 42.9, 'Cooler Master'),
-('Nova Window', 46.9, 'BitFenix');
+('Nova Window', 46.9, 'BitFenix'),
+
+('X470 Gaming Plus', 129.46, 'MSI');
 
 INSERT INTO `ACPC`.`FacteurForme`
 (`type`)
@@ -126,7 +128,7 @@ INSERT INTO `ACPC`.`Socket`
 (`nom`)
 VALUES
 ('LGA 775'), ('LGA 1366'), ('FM1'), ('LGA 1156'), ('LGA 1155'), ('LGA 2011'),
-('LGA 1150'), ('LGA 2011-v3'), ('LGA 1151');
+('LGA 1150'), ('LGA 2011-v3'), ('LGA 1151'), ('AM4');
 
 INSERT INTO `ACPC`.`ConnecteurMemoireVive`
 (`connecteur`)
@@ -145,20 +147,22 @@ INSERT INTO `ACPC`.`CarteMere`
  `connecteurEmplacementCarteGraphique`,
  `nomSocket`)
 VALUES
-(1, 4, 32, 'Z97', 3200, 5, 'ATX', 'DIMM 240', 'PCIe x16', 'LGA 1150');
+(1, 4, 32, 'Z97', 3200, 5, 'ATX', 'DIMM 240', 'PCIe x16', 'LGA 1150'),
+(10, 4, 64, 'X470', 3466, 6, 'ATX', 'DIMM 240', 'PCIe x16', 'AM4');
 
 INSERT INTO `ACPC`.`CarteMere_Port`
 (`noCarteMere`,
  `nomPort`,
  `nombre`)
 VALUES
-(1, 'HDMI', 1), (1, 'DVI-D', 1), (1, 'VGA', 1);
+(1, 'HDMI', 1), (1, 'DVI-D', 1), (1, 'VGA', 1),
+(10, 'DVI-D', 1), (10, 'HDMI', 1);
 
 INSERT INTO `ACPC`.`TypeRAM`
 (`noCarteMere`,
  `typeRAM`)
 VALUES
-(1, 'DDR3');
+(1, 'DDR3'), (10, 'DDR4');
 
 INSERT INTO `ACPC`.`MemoireMorte`
 (`noComposant`,
@@ -196,7 +200,7 @@ INSERT INTO `ACPC`.`Processeur`
  `frequence`,
  `frequenceMax`,
  `ECC`,
- `mutliThreading`,
+ `multithreading`,
  `nomSocket`)
 VALUES
 (2, 4, 3.5, 3.9, 0, 0, 'LGA 1150');

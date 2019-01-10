@@ -153,7 +153,7 @@ CREATE TABLE Processeur (
      frequence DECIMAL(5,3) NOT NULL,
      frequenceMax DECIMAL(5,3) NOT NULL,
      ECC TINYINT NOT NULL DEFAULT 0,
-     mutliThreading TINYINT NOT NULL DEFAULT 0,
+     multithreading TINYINT NOT NULL DEFAULT 0,
      nomSocket VARCHAR(20) NOT NULL,
      CONSTRAINT PK_Processeur PRIMARY KEY (noComposant));
 
