@@ -57,7 +57,7 @@ CREATE TABLE CarteGraphique (
      largeur INTEGER NOT NULL,
      profondeur INTEGER NOT NULL,
      nbEmplacementSurBoitier INTEGER NOT NULL,
-     connecteurEmplacementCarteGraphique VARCHAR(20) NOT NULL,
+     typeEmplacementCarteGraphique VARCHAR(20) NOT NULL,
      nomPuceGraphique VARCHAR(20) NOT NULL,
      CONSTRAINT PK_CarteGraphique PRIMARY KEY (noComposant));
 
@@ -80,9 +80,10 @@ CREATE TABLE CarteMere (
      chipset VARCHAR(20) NOT NULL,
      frequenceRAMMax INTEGER NOT NULL,
      nbEmplacementsPCIe INTEGER NOT NULL,
+     nomTypeMemoireVive VARCHAR(20) NOT NULL,
+     typeConnecteurMemoireVive VARCHAR(20) NOT NULL,
+     typeEmplacementCarteGraphique VARCHAR(20) NOT NULL,
      typeFacteurForme VARCHAR(20) NOT NULL,
-     connecteurConnecteurMemoireVive VARCHAR(20) NOT NULL,
-     connecteurEmplacementCarteGraphique VARCHAR(20) NOT NULL,
      nomSocket VARCHAR(20) NOT NULL,
      CONSTRAINT PK_CarteMere PRIMARY KEY (noComposant));
 
@@ -104,16 +105,16 @@ CREATE TABLE ConnecteurAlim (
      CONSTRAINT PK_ConnecteurAlim PRIMARY KEY (type));
 
 CREATE TABLE ConnecteurMemoireVive (
-     connecteur VARCHAR(20) NOT NULL,
-     CONSTRAINT PK_ConnecteurMemoireVive PRIMARY KEY (connecteur));
+     type VARCHAR(20) NOT NULL,
+     CONSTRAINT PK_ConnecteurMemoireVive PRIMARY KEY (type));
 
 CREATE TABLE Constructeur (
      nom VARCHAR(100) NOT NULL,
      CONSTRAINT PK_Constructeur PRIMARY KEY (nom));
 
 CREATE TABLE EmplacementCarteGraphique (
-     connecteur VARCHAR(20) NOT NULL,
-     CONSTRAINT PK_EmplacementCarteGraphique PRIMARY KEY (connecteur));
+     type VARCHAR(20) NOT NULL,
+     CONSTRAINT PK_EmplacementCarteGraphique PRIMARY KEY (type));
 
 CREATE TABLE EmplacementMemoireMorte (
      type DECIMAL(3,2) NOT NULL,
@@ -137,10 +138,10 @@ CREATE TABLE MemoireMorte (
 
 CREATE TABLE MemoireVive (
      noComposant INTEGER UNSIGNED AUTO_INCREMENT,
-     type VARCHAR(20) NOT NULL,
+     nomTypeMemoireVive VARCHAR(20) NOT NULL,
      frequence INTEGER NOT NULL,
      ECC TINYINT NOT NULL DEFAULT 0,
-     connecteurConnecteurMemoireVive VARCHAR(20) NOT NULL,
+     typeConnecteurMemoireVive VARCHAR(20) NOT NULL,
      CONSTRAINT PK_MemoireVive PRIMARY KEY (noComposant));
 
 CREATE TABLE Port (
@@ -184,10 +185,9 @@ CREATE TABLE SSD (
      vitesseLecture INTEGER,
      CONSTRAINT PK_SSD PRIMARY KEY (noComposantMemoireMorte));
 
-CREATE TABLE TypeRAM (
-     noCarteMere INTEGER UNSIGNED,
-     typeRAM VARCHAR(20) NOT NULL,
-     CONSTRAINT PK_TypeRAM PRIMARY KEY (noCarteMere, typeRAM));
+CREATE TABLE TypeMemoireVive (
+     nom VARCHAR(20) NOT NULL,
+     CONSTRAINT PK_TypeMemoireVive PRIMARY KEY (nom));
 
 
 -- Constraints Section
@@ -254,8 +254,8 @@ ALTER TABLE CarteGraphique ADD CONSTRAINT FK_CarteGraphique_noComposant
      ON UPDATE CASCADE;
 
 ALTER TABLE CarteGraphique ADD CONSTRAINT FK_CarteGraphique_connecteurEmplacementCarteGraphique
-     FOREIGN KEY (connecteurEmplacementCarteGraphique)
-     REFERENCES EmplacementCarteGraphique (connecteur)
+     FOREIGN KEY (typeEmplacementCarteGraphique)
+     REFERENCES EmplacementCarteGraphique (type)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
@@ -295,21 +295,27 @@ ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_noComposant
 	 ON DELETE CASCADE
      ON UPDATE CASCADE;
 
+ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_nomTypeMemoireVive
+     FOREIGN KEY (nomTypeMemoireVive)
+     REFERENCES TypeMemoireVive (nom)
+     ON DELETE RESTRICT
+     ON UPDATE CASCADE;
+
 ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_typeFacteurForme
      FOREIGN KEY (typeFacteurForme)
      REFERENCES FacteurForme (type)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
-ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_connecteurConnecteurMemoireVive
-     FOREIGN KEY (connecteurConnecteurMemoireVive)
-     REFERENCES ConnecteurMemoireVive (connecteur)
+ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_typeConnecteurMemoireVive
+     FOREIGN KEY (typeConnecteurMemoireVive)
+     REFERENCES ConnecteurMemoireVive (type)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
-ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_connecteurEmplacementCarteGraphique
-     FOREIGN KEY (connecteurEmplacementCarteGraphique)
-     REFERENCES EmplacementCarteGraphique (connecteur)
+ALTER TABLE CarteMere ADD CONSTRAINT FK_CarteMere_typeEmplacementCarteGraphique
+     FOREIGN KEY (typeEmplacementCarteGraphique)
+     REFERENCES EmplacementCarteGraphique (type)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
@@ -361,15 +367,21 @@ ALTER TABLE MemoireMorte ADD CONSTRAINT FK_MemoireMorte_typeConnecteurAlim
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
+ALTER TABLE MemoireVive ADD constraint FK_MemoireVive_nomTypeMemoireVive
+     FOREIGN KEY (nomTypeMemoireVive)
+     REFERENCES TypeMemoireVive (nom)
+     ON DELETE RESTRICT
+     ON UPDATE CASCADE;
+
 ALTER TABLE MemoireVive ADD CONSTRAINT FK_MemoireVive_noComposant
      FOREIGN KEY (noComposant)
      REFERENCES Composant (no)
 	 ON DELETE CASCADE
      ON UPDATE CASCADE;
 
-ALTER TABLE MemoireVive ADD CONSTRAINT FK_MemoireVive_connecteurConnecteurMemoireVive
-     FOREIGN KEY (connecteurConnecteurMemoireVive)
-     REFERENCES ConnecteurMemoireVive (connecteur)
+ALTER TABLE MemoireVive ADD CONSTRAINT FK_MemoireVive_typeConnecteurMemoireVive
+     FOREIGN KEY (typeConnecteurMemoireVive)
+     REFERENCES ConnecteurMemoireVive (type)
      ON DELETE RESTRICT
      ON UPDATE CASCADE;
 
@@ -415,12 +427,6 @@ ALTER TABLE SSD ADD CONSTRAINT FK_SSD_noComposantMemoireMorte
      ON DELETE CASCADE
      ON UPDATE CASCADE;
 
-ALTER TABLE TypeRAM ADD CONSTRAINT FK_TypeRAM_noCarteMere
-     FOREIGN KEY (noCarteMere)
-     REFERENCES CarteMere (noComposant)
-     ON DELETE CASCADE
-     ON UPDATE CASCADE;
-
 
 -- Unicity constraints
 -- ___________
@@ -463,7 +469,7 @@ CREATE UNIQUE INDEX FKCom_Car_IND
      ON CarteGraphique (noComposant);
 
 CREATE INDEX FKs_introduit_IND
-     ON CarteGraphique (connecteurEmplacementCarteGraphique);
+     ON CarteGraphique (typeEmplacementCarteGraphique);
 
 CREATE INDEX FKimplemente_IND
      ON CarteGraphique (nomPuceGraphique);
@@ -487,10 +493,10 @@ CREATE INDEX FKcaracterise_IND
      ON CarteMere (typeFacteurForme);
 
 CREATE INDEX FKcomprend_IND
-     ON CarteMere (connecteurConnecteurMemoireVive);
+     ON CarteMere (typeConnecteurMemoireVive);
 
 CREATE INDEX FKmet_a_disposition_IND
-     ON CarteMere (connecteurEmplacementCarteGraphique);
+     ON CarteMere (typeEmplacementCarteGraphique);
 
 CREATE INDEX FKfournit_IND
      ON CarteMere (nomSocket);
@@ -511,13 +517,13 @@ CREATE UNIQUE INDEX ID_ConnecteurAlim_IND
      ON ConnecteurAlim (type);
 
 CREATE UNIQUE INDEX ID_ConnecteurMemoireVive_IND
-     ON ConnecteurMemoireVive (connecteur);
+     ON ConnecteurMemoireVive (type);
 
 CREATE UNIQUE INDEX ID_Constructeur_IND
      ON Constructeur (nom);
 
 CREATE UNIQUE INDEX ID_EmplacementCarteGraphique_IND
-     ON EmplacementCarteGraphique (connecteur);
+     ON EmplacementCarteGraphique (type);
 
 CREATE UNIQUE INDEX ID_EmplacementMemoireMorte_IND
      ON EmplacementMemoireMorte (type);
@@ -541,7 +547,7 @@ CREATE UNIQUE INDEX FKCom_Mem_1_IND
      ON MemoireVive (noComposant);
 
 CREATE INDEX FKa_IND
-     ON MemoireVive (connecteurConnecteurMemoireVive);
+     ON MemoireVive (typeConnecteurMemoireVive);
 
 CREATE UNIQUE INDEX ID_port_IND
      ON Port (nom);
@@ -573,5 +579,5 @@ CREATE UNIQUE INDEX ID_Socket_IND
 CREATE UNIQUE INDEX FKMem_SSD_IND
      ON SSD (noComposantMemoireMorte);
 
-CREATE UNIQUE INDEX ID_typeRAM_IND
-     ON TypeRAM (noCarteMere, typeRAM);
+CREATE UNIQUE INDEX ID_TypeMemoireVive_IND
+     ON TypeMemoireVive (nom);

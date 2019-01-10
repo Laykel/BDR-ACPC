@@ -121,7 +121,7 @@ VALUES
 ('HDMI'), ('DVI-D'), ('DisplayPort'), ('VGA');
 
 INSERT INTO `ACPC`.`EmplacementCarteGraphique`
-(`connecteur`)
+(`type`)
 VALUES
 ('PCIe x16'), ('PCIe x8');
 
@@ -133,7 +133,7 @@ INSERT INTO `ACPC`.`CarteGraphique`
  `largeur`,
  `profondeur`,
  `nbEmplacementSurBoitier`,
- `connecteurEmplacementCarteGraphique`,
+ `typeEmplacementCarteGraphique`,
  `nomPuceGraphique`)
 VALUES
 (3, 1657, 'GDDR5', 8, 29.8, 13.4, 2, 'PCIe x16', 'GeForce GTX 1070'),
@@ -162,8 +162,13 @@ VALUES
 ('LGA 1150'), ('LGA 2011-v3'), ('LGA 1151'), ('AM4'), ('AM2'), ('AM2+'), ('AM3'),
 ('AM3+'), ('FM2'), ('FM2+');
 
+INSERT INTO `ACPC`.`TypeMemoireVive`
+(`nom`)
+VALUES
+('DDR3'), ('DDR4');
+
 INSERT INTO `ACPC`.`ConnecteurMemoireVive`
-(`connecteur`)
+(`type`)
 VALUES
 ('DIMM 184'), ('DIMM 240'), ('SODIMM 200'), ('DIMM 288');
 
@@ -175,12 +180,13 @@ INSERT INTO `ACPC`.`CarteMere`
  `frequenceRAMMax`,
  `nbEmplacementsPCIe`,
  `typeFacteurForme`,
- `connecteurConnecteurMemoireVive`,
- `connecteurEmplacementCarteGraphique`,
+ `nomTypeMemoireVive`,
+ `typeConnecteurMemoireVive`,
+ `typeEmplacementCarteGraphique`,
  `nomSocket`)
 VALUES
-(1, 4, 32, 'Z97', 3200, 5, 'ATX', 'DIMM 240', 'PCIe x16', 'LGA 1150'),
-(10, 4, 64, 'X470', 3466, 6, 'ATX', 'DIMM 240', 'PCIe x16', 'AM4');
+(1, 4, 32, 'Z97', 3200, 5, 'ATX', 'DDR3', 'DIMM 240', 'PCIe x16', 'LGA 1150'),
+(10, 4, 64, 'X470', 3466, 6, 'ATX', 'DDR4', 'DIMM 240', 'PCIe x16', 'AM4');
 
 INSERT INTO `ACPC`.`CarteMere_Port`
 (`noCarteMere`,
@@ -189,12 +195,6 @@ INSERT INTO `ACPC`.`CarteMere_Port`
 VALUES
 (1, 'HDMI', 1), (1, 'DVI-D', 1), (1, 'VGA', 1),
 (10, 'DVI-D', 1), (10, 'HDMI', 1);
-
-INSERT INTO `ACPC`.`TypeRAM`
-(`noCarteMere`,
- `typeRAM`)
-VALUES
-(1, 'DDR3'), (10, 'DDR4');
 
 INSERT INTO `ACPC`.`MemoireMorte`
 (`noComposant`,
@@ -224,10 +224,10 @@ VALUES
 
 INSERT INTO `ACPC`.`MemoireVive`
 (`noComposant`,
- `type`,
+ `nomTypeMemoireVive`,
  `frequence`,
  `ECC`,
- `connecteurConnecteurMemoireVive`)
+ `typeConnecteurMemoireVive`)
 VALUES
 (4, 'DDR3', 1600, 0, 'DIMM 240'),
 (13, 'DDR4', 3000, 0, 'DIMM 288');
