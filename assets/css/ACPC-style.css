@@ -157,6 +157,14 @@ COLLAPSIBLE PANEL - COMPOSANT
     content: '';
 }
 
+.btn-group-xs > .btn, .btn-xs {
+    padding: .15rem .2rem;
+    font-size: .875rem;
+    line-height: 1;
+    border-radius: .2rem;
+    font-size: 12px;
+}
+
 /*
 ===========
 FILTRE FORM

@@ -32,6 +32,10 @@
               "autoWidth": false,
               "data": data.data,
               "columns": data.columns,
+              "columnDefs": [{
+                "targets": -1,
+                "orderable": false,
+              }]
             });
           }
         }
