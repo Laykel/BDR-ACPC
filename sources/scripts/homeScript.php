@@ -19,7 +19,4 @@ if (isset($_POST['PCtype']) && isset($_POST['PCbudget'])) {
                             'SSD', 'Disque dur', 'Boitier', 'Alimentation');
 
 }
-
-$req = "SELECT * FROM Composant";
-$test = dbRequest($req, 'select');
 ?>

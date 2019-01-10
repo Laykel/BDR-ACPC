@@ -88,11 +88,6 @@ if (isset($listeComposant)) {
 }
 ?>
 
-<div class="row">
-  <h1>Holà mundo</h1>
-  <?php var_dump($test->fetchAll()); ?>
-</div>
-
 <script>
   $(function() {
     $('.panel-collapse').on('show.bs.collapse', function () {
