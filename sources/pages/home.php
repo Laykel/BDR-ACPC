@@ -17,7 +17,7 @@ Filename: home.php
           </a>
         </h4>
       </div>
-      <div id="collapseFiltre" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="heading-filter">
+      <div id="collapseFiltre" class="panel-collapse collapse in <?php if($showFilters) echo show; ?>" role="tabpanel" aria-labelledby="heading-filter">
         <div class="panel-body">
           <form  id="filtre-form" method="post">
             <div class="form-group row">
