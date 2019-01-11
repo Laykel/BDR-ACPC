@@ -174,10 +174,7 @@ if (isset($_GET['composant_id'])) {
     }
 
     // Ajout de la dernière colonne avec le bouton "ajouter"
-    array_push($columns, ["title" => "Action", "data" => "action"]);
-    if (!empty($data)) {
-        $data[0]["action"] = "<button type=\"button\" class=\"btn btn-info btn-xs\">Ajouter</button>";
-    }
+    array_push($columns, ["title" => "Action"]);
 
     // Send data
     $payload = [

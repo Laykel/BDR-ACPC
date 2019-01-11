@@ -35,8 +35,12 @@
               "columnDefs": [{
                 "targets": -1,
                 "orderable": false,
+                "data": null,
+                "defaultContent": "<button type=\"button\" class=\"btn btn-info btn-xs\">Ajouter</button>",
               }]
             });
+          } else {
+            // TODO clear DataTable
           }
         }
       });
