@@ -12,7 +12,8 @@ VALUES
 ('MSI'), ('Cooler Master'), ('Asus'), ('Intel'), ('NVidia'), ('HyperX'),
 ('Samsung'), ('Western Digital'), ('BitFenix'), ('AMD'), ('Gigabyte'),
 ('Corsair'), ('Toshiba'), ('EVGA'), ('ARTIC'), ('NZXT'), ('Kingston'),
-('ASRock'), ('PowerColor'), ('G.Skill'), ('Plextor'), ('Lian-Li');
+('ASRock'), ('PowerColor'), ('G.Skill'), ('Plextor'), ('Lian-Li'),
+('Be Quiet!');
 
 INSERT INTO `ACPC`.`Composant`
 (`nom`,
@@ -37,7 +38,7 @@ VALUES
 ('PH2300U', 75, 'Toshiba'),                        -- HDD
 ('SuperNova 850', 99.90, 'EVGA'),                  -- Alim
 ('Freezer Xtreme', 31.80, 'ARTIC'),                -- Refroidisseur
-('H500', 76.90, 'NZXT');                           -- Boitier
+('H500', 76.90, 'NZXT'),                           -- Boitier
 
 ('X99', 229.9, 'ASRock'),                          -- carte mère
 ('Xeon E5 2620', 409, 'Intel'),                    -- CPU
@@ -63,7 +64,7 @@ VALUES
 INSERT INTO `ACPC`.`FacteurForme`
 (`type`)
 VALUES
-('ATX'), ('mATX'), ('Mini ITX'), ('SFX12V');
+('ATX'), ('mATX'), ('Mini ITX'), ('SFX12V'), ('EATX');
 
 INSERT INTO `ACPC`.`ConnecteurAlim`
 (`type`)
@@ -88,7 +89,7 @@ VALUES
 (7, '20+4-pin ATX', 1), (7, '4+4-pin 12V', 1), (7, '4-pin Molex', 6),
 (7, '4-pin Floppy', 1), (7, '15-pin S-ATA', 8), (7, '6+2 broches PCIe', 4),
 (16, '20+4-pin ATX', 1), (16, '4+4-pin 12V', 2), (16, '4-pin Molex', 4),
-(16, '4-pin Floppy', 1), (16, '15-pin S-ATA', 10), (16, '6+2 broches PCIe', 4)
+(16, '4-pin Floppy', 1), (16, '15-pin S-ATA', 10), (16, '6+2 broches PCIe', 4),
 (25, '20+4-pin ATX', 1), (25, '4+4-pin 12V', 1), (25, '4-pin Molex', 4),
 (25, '15-pin S-ATA', 6), (25, '6+2 broches PCIe', 4);
 
@@ -129,7 +130,8 @@ INSERT INTO `ACPC`.`PuceGraphique`
  `nomConstructeur`)
 VALUES
 ('GeForce GTX 1070', 'NVidia'),
-('Radeon RX 580', 'AMD');
+('Radeon RX 580', 'AMD'),
+('Radeon RX 570', 'AMD');
 
 INSERT INTO `ACPC`.`Port`
 (`nom`)
@@ -179,7 +181,7 @@ INSERT INTO `ACPC`.`Socket`
 VALUES
 ('LGA 775'), ('LGA 1366'), ('FM1'), ('LGA 1156'), ('LGA 1155'), ('LGA 2011'),
 ('LGA 1150'), ('LGA 2011-v3'), ('LGA 1151'), ('AM4'), ('AM2'), ('AM2+'), ('AM3'),
-('AM3+'), ('FM2'), ('FM2+');
+('AM3+'), ('FM2'), ('FM2+'), ('LGA 2066');
 
 INSERT INTO `ACPC`.`TypeMemoireVive`
 (`nom`)
@@ -277,7 +279,7 @@ INSERT INTO `ACPC`.`Refroidisseur`
  `helice`)
 VALUES
 (8, 15.9, 0, 1),
-(17, 13.1, 1, 0)
+(17, 13.1, 1, 0),
 (26, 12.0, 1, 1);
 
 INSERT INTO `ACPC`.`Refroidisseur_Socket`
