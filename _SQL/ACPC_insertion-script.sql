@@ -104,9 +104,9 @@ INSERT INTO `ACPC`.`Boitier`
  `largeur`,
  `profondeur`)
 VALUES
-(9, 43.7, 46.5, 18.3),
-(18, 42.8, 46, 21),
-(27, 37.6, 49.3, 24.2);
+(9, 437, 465, 183),
+(18, 428, 460, 210),
+(27, 376, 493, 242);
 
 INSERT INTO `ACPC`.`Boitier_FacteurForme`
 (`noBoitier`,
