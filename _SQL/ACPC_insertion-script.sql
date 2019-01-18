@@ -13,42 +13,50 @@ VALUES
 ('Samsung'), ('Western Digital'), ('BitFenix'), ('AMD'), ('Gigabyte'),
 ('Corsair'), ('Toshiba'), ('EVGA'), ('ARTIC'), ('NZXT'), ('Kingston'),
 ('ASRock'), ('PowerColor'), ('G.Skill'), ('Plextor'), ('Lian-Li'),
-('Be Quiet!');
+('Be Quiet!'), ('SanDisk'), ('Seagate'), ('Silverstone'), ('Rosewill');
 
 INSERT INTO `ACPC`.`Composant`
 (`nom`,
  `prix`,
  `nomConstructeur`)
 VALUES
-('Z97S SLI Krait Edition', 132, 'MSI'),            -- carte mère
-('Core i5 4690K', 257, 'Intel'),                   -- CPU
-('GeForce GTX 1070 STRIX 8G-GAMING', 508, 'ASUS'), -- carte graphique
-('Fury', 135, 'HyperX'),                           -- RAM
-('850 EVO Basic', 51.3, 'Samsung'),                -- SSD
-('Blue', 54, 'Western Digital'),                   -- HDD
-('G750M', 97.9, 'Cooler Master'),                  -- Alim
-('Hyper 212 Evo', 42.9, 'Cooler Master'),          -- Refroidisseur
-('Nova Window', 46.9, 'BitFenix'),                 -- Boitier
+('Z97S SLI Krait Edition', 132, 'MSI'),            -- 1 carte mère
+('Core i5 4690K', 257, 'Intel'),                   -- 2 CPU
+('GeForce GTX 1070 STRIX 8G-GAMING', 508, 'ASUS'), -- 3 carte graphique
+('Fury', 135, 'HyperX'),                           -- 4 RAM
+('850 EVO Basic', 51.3, 'Samsung'),                -- 5 SSD
+('Blue', 54, 'Western Digital'),                   -- 6 HDD
+('G750M', 97.9, 'Cooler Master'),                  -- 7 Alim
+('Hyper 212 Evo', 42.9, 'Cooler Master'),          -- 8 Refroidisseur
+('Nova Window', 46.9, 'BitFenix'),                 -- 9 Boitier
 
-('X470 Gaming Plus', 129.46, 'MSI'),               -- carte mère
-('Rysen 7 2700X', 379.9, 'AMD'),                   -- CPU
-('Radeon RX 580 Gaming', 284.90, 'Gigabyte'),      -- carte graphique
-('Vengeance LPX', 49.90, 'Corsair'),               -- RAM
-('A400', 64.90, 'Kingston'),                       -- SSD
-('PH2300U', 75, 'Toshiba'),                        -- HDD
-('SuperNova 850', 99.90, 'EVGA'),                  -- Alim
-('Freezer Xtreme', 31.80, 'ARTIC'),                -- Refroidisseur
-('H500', 76.90, 'NZXT'),                           -- Boitier
+('X470 Gaming Plus', 129.46, 'MSI'),               -- 10 carte mère
+('Rysen 7 2700X', 379.9, 'AMD'),                   -- 11 CPU
+('Radeon RX 580 Gaming', 284.90, 'Gigabyte'),      -- 12 carte graphique
+('Vengeance LPX', 49.90, 'Corsair'),               -- 13 RAM
+('A400', 64.90, 'Kingston'),                       -- 14 SSD
+('PH2300U', 75, 'Toshiba'),                        -- 15 HDD
+('SuperNova 850', 99.90, 'EVGA'),                  -- 16 Alim
+('Freezer Xtreme', 31.80, 'ARTIC'),                -- 17 Refroidisseur
+('H500', 76.90, 'NZXT'),                           -- 18 Boitier
 
-('X99', 229.9, 'ASRock'),                          -- carte mère
-('Xeon E5 2620', 409, 'Intel'),                    -- CPU
-('AXRX 570', 119.9, 'PowerColor'),                 -- carte graphique
-('Trident Z RGB', 124.9, 'G.Skill'),               -- RAM
-('PX-128M6V', 86.00, 'Plextor'),                   -- SSD
-('WD20EZRZ', 61.9, 'Western Digital'),             -- HDD
-('BN215', 135.3, 'Be Quiet!'),                     -- Alim
-('H60', 64.9, 'Corsair'),                          -- Refroidisseur
-('PC-O10 WX', 230.00, 'Lian-Li');                  -- Boitier
+('X99', 229.9, 'ASRock'),                          -- 19 carte mère
+('Xeon E5 2620', 409, 'Intel'),                    -- 20 CPU
+('AXRX 570', 119.9, 'PowerColor'),                 -- 21 carte graphique
+('Trident Z RGB', 124.9, 'G.Skill'),               -- 22 RAM
+('PX-128M6V', 86.00, 'Plextor'),                   -- 23 SSD
+('WD20EZRZ', 61.9, 'Western Digital'),             -- 24 HDD
+('BN215', 135.3, 'Be Quiet!'),                     -- 25 Alim
+('H60', 64.9, 'Corsair'),                          -- 26 Refroidisseur
+('PC-O10 WX', 230.00, 'Lian-Li'),                  -- 27 Boitier
+
+('H310M', 55.9, 'Gigabyte'),                       -- 28 carte mère
+('Core i3 8100', 118.9, 'Intel'),                  -- 29 CPU
+('Aegis', 169.9, 'G.Skill'),                       -- 30 RAM
+('SSD PLUS', 28, 'SanDisk'),                       -- 31 SSD
+('SkyHawk', 52.7, 'Seagate'),                      -- 32 HDD
+('ST30SF', 54.9, 'Silverstone'),                   -- 33 Alim
+('FMB-X1', 19.9, 'Rosewill');                      -- 34 Boitier
 /*
 ('', , ''), -- carte mère
 ('', , ''), -- CPU
@@ -79,7 +87,8 @@ INSERT INTO `ACPC`.`Alimentation`
 VALUES
 (7, 750, 'ATX'),
 (16, 850, 'ATX'),
-(25, 600, 'SFX12V');
+(25, 600, 'SFX12V'),
+(33, 300, 'SFX12V');
 
 INSERT INTO `ACPC`.`Alimentation_ConnecteurAlim`
 (`noAlimentation`,
@@ -91,7 +100,9 @@ VALUES
 (16, '20+4-pin ATX', 1), (16, '4+4-pin 12V', 2), (16, '4-pin Molex', 4),
 (16, '4-pin Floppy', 1), (16, '15-pin S-ATA', 10), (16, '6+2 broches PCIe', 4),
 (25, '20+4-pin ATX', 1), (25, '4+4-pin 12V', 1), (25, '4-pin Molex', 4),
-(25, '15-pin S-ATA', 6), (25, '6+2 broches PCIe', 4);
+(25, '15-pin S-ATA', 6), (25, '6+2 broches PCIe', 4),
+(33,'20+4-pin ATX',1), (33,'4+4-pin 12V',1), (33,'4-pin Molex', 2), 
+(33, '4-pin Floppy', 1),(33, '15-pin S-ATA', 3), (33, '6+2 broches PCIe', 1);
 
 INSERT INTO `ACPC`.`EmplacementMemoireMorte`
 (`type`)
@@ -106,7 +117,8 @@ INSERT INTO `ACPC`.`Boitier`
 VALUES
 (9, 437, 465, 183),
 (18, 428, 460, 210),
-(27, 376, 493, 242);
+(27, 376, 493, 242),
+(34, 352, 360, 175);
 
 INSERT INTO `ACPC`.`Boitier_FacteurForme`
 (`noBoitier`,
@@ -114,7 +126,8 @@ INSERT INTO `ACPC`.`Boitier_FacteurForme`
 VALUES
 (9, 'ATX'), (9, 'mATX'), (9, 'Mini ITX'),
 (18, 'ATX'), (18, 'mATX'), (18, 'Mini ITX'),
-(27, 'ATX'), (27, 'SFX12V'), (27, 'mATX'), (27, 'EATX');
+(27, 'ATX'), (27, 'SFX12V'), (27, 'mATX'), (27, 'EATX'),
+(34, 'mATX'), (34, 'SFX12V'), (34, 'Mini ITX');
 
 INSERT INTO `ACPC`.`Boitier_EmplacementMemoireMorte`
 (`noBoitier`,
@@ -123,7 +136,8 @@ INSERT INTO `ACPC`.`Boitier_EmplacementMemoireMorte`
 VALUES
 (9, 2.5, 2), (9, 3.5, 4), (9, 5.25, 1),
 (18, 2.5, 2), (18, 3.5, 2),
-(27, 2.5, 3), (27, 3.5, 4);
+(27, 2.5, 3), (27, 3.5, 4),
+(34, 2.5, 1), (34, 3.5, 1);
 
 INSERT INTO `ACPC`.`PuceGraphique`
 (`nom`,
@@ -208,7 +222,8 @@ INSERT INTO `ACPC`.`CarteMere`
 VALUES
 (1, 4, 32, 'Z97', 3200, 5, 'ATX', 'DDR3', 'DIMM 240', 'PCIe x16', 'LGA 1150'),
 (10, 4, 64, 'X470', 3466, 6, 'ATX', 'DDR4', 'DIMM 240', 'PCIe x16', 'AM4'),
-(19, 8, 128, 'X99', 3400, 5, 'EATX', 'DDR4', 'DIMM 288', 'PCIe x16', 'LGA 2011-v3');
+(19, 8, 128, 'X99', 3400, 5, 'EATX', 'DDR4', 'DIMM 288', 'PCIe x16', 'LGA 2011-v3'),
+(28, 2, 32, 'H310', 2666, 1, 'mATX', 'DDR4', 'DIMM 288', 'PCIe x16', 'LGA 1151');
 
 INSERT INTO `ACPC`.`CarteMere_Port`
 (`noCarteMere`,
@@ -229,7 +244,9 @@ VALUES
 (14, 480, 2.5, '15-pin S-ATA'),
 (15, 1000, 3.5, '15-pin S-ATA'),
 (23, 128, 2.5, '15-pin S-ATA'),
-(24, 2000, 3.5, '15-pin S-ATA');
+(24, 2000, 3.5, '15-pin S-ATA'),
+(31, 120, 2.5, '15-pin S-ATA'),
+(32, 1000, 3.5, '15-pin S-ATA');
 
 INSERT INTO `ACPC`.`HDD`
 (`noComposantMemoireMorte`,
@@ -237,7 +254,8 @@ INSERT INTO `ACPC`.`HDD`
 VALUES
 (6, 7200),
 (15, 7200),
-(24, 5400);
+(24, 5400),
+(32, 5900);
 
 INSERT INTO `ACPC`.`SSD`
 (`noComposantMemoireMorte`,
@@ -245,8 +263,9 @@ INSERT INTO `ACPC`.`SSD`
  `vitesseLecture`)
 VALUES
 (5, 520, 550),
-(14, 500, 450),
-(23, 170, 535);
+(14, 450, 500),
+(23, 170, 535),
+(31, 450, 535);
 
 INSERT INTO `ACPC`.`MemoireVive`
 (`noComposant`,
@@ -257,7 +276,8 @@ INSERT INTO `ACPC`.`MemoireVive`
 VALUES
 (4, 'DDR3', 1600, 0, 'DIMM 240'),
 (13, 'DDR4', 3000, 0, 'DIMM 288'),
-(22, 'DDR4', 3000, 0, 'DIMM 288');
+(22, 'DDR4', 3000, 0, 'DIMM 288'),
+(30, 'DDR4', 2666, 0, 'DIMM 288');
 
 INSERT INTO `ACPC`.`Processeur`
 (`noComposant`,
@@ -270,7 +290,8 @@ INSERT INTO `ACPC`.`Processeur`
 VALUES
 (2, 4, 3.5, 3.9, 0, 0, 'LGA 1150'),
 (11, 8, 3.7, 4.3, 0, 1, 'AM4'),
-(20, 8, 2.1, 3, 1, 1, 'LGA 2011-v3');
+(20, 8, 2.1, 3, 1, 1, 'LGA 2011-v3'),
+(29, 4, 3.6, 3.9, 0, 1, 'LGA 1151');
 
 INSERT INTO `ACPC`.`Refroidisseur`
 (`noComposant`,
