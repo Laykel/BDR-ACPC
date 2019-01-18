@@ -154,9 +154,9 @@ INSERT INTO `ACPC`.`CarteGraphique`
  `typeEmplacementCarteGraphique`,
  `nomPuceGraphique`)
 VALUES
-(3, 1657, 'GDDR5', 8, 29.8, 13.4, 2, 'PCIe x16', 'GeForce GTX 1070'),
-(12, 1340, 'GDDR5', 4, 23.2, 11.6, 2, 'PCIe x16', 'Radeon RX 580'),
-(21, 1168, 'GDDR5', 4, 25.5, 137, 2, 'PCIe x16', 'Radeon RX 570');
+(3, 1657, 'GDDR5', 8, 298, 134, 2, 'PCIe x16', 'GeForce GTX 1070'),
+(12, 1340, 'GDDR5', 4, 232, 116, 2, 'PCIe x16', 'Radeon RX 580'),
+(21, 1168, 'GDDR5', 4, 255, 137, 2, 'PCIe x16', 'Radeon RX 570');
 
 INSERT INTO `ACPC`.`CarteGraphique_ConnecteurAlim`
 (`noCarteGraphique`,
@@ -278,9 +278,9 @@ INSERT INTO `ACPC`.`Refroidisseur`
  `refroidissementLiquide`,
  `helice`)
 VALUES
-(8, 15.9, 0, 1),
-(17, 13.1, 1, 0),
-(26, 12.0, 1, 1);
+(8, 159, 0, 1),
+(17, 131, 1, 0),
+(26, 120, 1, 1);
 
 INSERT INTO `ACPC`.`Refroidisseur_Socket`
 (`noRefroidisseur`,
