@@ -1,5 +1,18 @@
 <!--
-Filename: home.php
+/*
+-----------------------------------------------------------------------------------
+Projet      : ACPC
+Fichier     : home.php
+Auteur(s)   : Gilliand Loris - Tutic Mateo - Wachter Luc
+Date        : 21.12.2018
+
+But         : Page home. Permet de réaliser une configuration d'un PC.
+
+Remarque(s) : -
+
+PHP version : 7.2.13
+-----------------------------------------------------------------------------------
+*/
 -->
 
 <div class="center-block">
@@ -17,7 +30,10 @@ Filename: home.php
           </a>
         </h4>
       </div>
-      <div id="collapseFiltre" class="panel-collapse collapse in <?php if($showFilters) echo show; ?>" role="tabpanel" aria-labelledby="heading-filter">
+      <div id="collapseFiltre"
+           class="panel-collapse collapse in <?php if($showFilters) echo show; ?>"
+           role="tabpanel"
+           aria-labelledby="heading-filter">
         <div class="panel-body">
           <form  id="filtre-form" method="post">
             <div class="form-group row">
@@ -89,13 +105,62 @@ if (isset($listeComposant)) {
 ?>
 
 <script>
+
+  /**
+   * Permet de charger les données d'un composant en AJAX.
+   * @param id id du composant en question (correspond à l'index de la liste $listeComposant)
+   */
+  function getData(id) {
+    $.ajax({
+      url: '<?php echo ROOT."/sources/scripts/homeComponentScript.php"; ?>',
+      type: 'GET',
+      data: 'composant_id='+id,
+      success: function(data) {
+        console.log(data);
+        data = JSON.parse(data);
+
+        // Création des tableaux pour chaque composant
+        if (!$.fn.DataTable.isDataTable('#tbl-composant-'+id)) {
+          $('#tbl-composant-'+id).DataTable({
+            "autoWidth": false,
+            "data": data.data,
+            "columns": data.columns,
+            "columnDefs": [{
+              "targets": -1,
+              "orderable": false,
+              "data": null,
+              "defaultContent": "<button type=\"button\" class=\"btn btn-info btn-xs add-comp\">Ajouter</button>",
+            }]
+          });
+        } else {
+          // TODO clear DataTable
+        }
+      }
+    });
+  }
+
+  // jquery ready
   $(function() {
+    // Ouverture d'un panel collapsible
     $('.panel-collapse').on('show.bs.collapse', function () {
       $(this).siblings('.panel-heading').addClass('active');
     });
 
+    // Fermeture d'un panel collapsible
     $('.panel-collapse').on('hide.bs.collapse', function () {
       $(this).siblings('.panel-heading').removeClass('active');
+    });
+
+    // Ouverture d'un panel collapsible d'un composant
+    var panel = $('.composant').on('show.bs.collapse', function () {
+      // Fermeture des autres composants déjà ouverts
+      panel.find('.collapse.show').collapse('hide');
+    });
+
+    // Ajout d'un composant par l'utilisateur
+    $('.composant .panel-body table').on('click', 'button', function() {
+      // TODO : Reload les données en rappelant getData() lorsqu'un composant est sélectionné par l'utilisateur
+      alert("toto");
     });
   });
 </script>
