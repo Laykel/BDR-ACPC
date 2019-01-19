@@ -15,7 +15,18 @@ PHP version : 7.2.13
 */
 -->
 
-<p class="font-weight-bold">Composant sélectionné : -</p>
+<p class="font-weight-bold">
+  Composant sélectionné :
+  <span class="selected-componant-<?php echo $key; ?>">-</span>
+  <button type="button"
+          class="btn btn-danger btn-xs"
+          id="delete-componant-<?php echo $key; ?>"
+          data-composant-id=""
+          data-composant-nom=""
+          style="display: none;">
+    Supprimer
+  </button>
+</p>
 <table id="tbl-composant-<?php echo $key; ?>" class="table table-hover"></table>
 
 <script>

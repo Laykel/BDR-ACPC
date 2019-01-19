@@ -105,7 +105,6 @@ if (isset($listeComposant)) {
 ?>
 
 <script>
-
   /**
    * Permet de charger les données d'un composant en AJAX.
    * @param id id du composant en question (correspond à l'index de la liste $listeComposant)
@@ -129,7 +128,11 @@ if (isset($listeComposant)) {
               "targets": -1,
               "orderable": false,
               "data": null,
-              "defaultContent": "<button type=\"button\" class=\"btn btn-info btn-xs add-comp\">Ajouter</button>",
+              "defaultContent": "<button type=\"button\" " +
+                                        "class=\"btn btn-info btn-xs\"" +
+                                        "data-composant-id=\""+id+"\">" +
+                                  "Ajouter" +
+                                "</button>",
             }]
           });
         } else {
@@ -157,10 +160,31 @@ if (isset($listeComposant)) {
       panel.find('.collapse.show').collapse('hide');
     });
 
-    // Ajout d'un composant par l'utilisateur
+    // Sélection d'un composant par l'utilisateur
     $('.composant .panel-body table').on('click', 'button', function() {
+      // Récupérer l'id du composant pour savoir lequel on manipule
+      var composant_id = $(this).data('composant-id');
+
+      // Récupérer le DataTable contenant le bouton "ajouter"
+      var table = $('#tbl-composant-'+composant_id).DataTable();
+
+      // Récupérer les données du composant à ajouter
+      var data = table.row($(this).parents('tr')).data();
+      console.log(data);
+
+      // Marqué le composant en tant que sélectionné
+      $('.selected-componant-'+composant_id).text(data["nom"]);
+
+      // Afficher le bouton "supprimer"
+      $('#delete-componant-'+composant_id).show().data("composant-id", composant_id).data("composant-nom", data["nom"]);
+
       // TODO : Reload les données en rappelant getData() lorsqu'un composant est sélectionné par l'utilisateur
-      alert("toto");
+
     });
+
+    // Suppresion d'un composant par l'utilisateur
+    $("button[id^='delete-componant-']").click(function() {
+      var composant_id = $(this).data('composant-id');
+    })
   });
 </script>
