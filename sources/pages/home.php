@@ -119,8 +119,8 @@ if (isset($listeComposant)) {
         data = JSON.parse(data);
 
         // Création des tableaux pour chaque composant
-        if (!$.fn.DataTable.isDataTable('#tbl-composant-'+id)) {
-          $('#tbl-composant-'+id).DataTable({
+        if (!$.fn.DataTable.isDataTable('#tbl-component-'+id)) {
+          $('#tbl-component-'+id).DataTable({
             "autoWidth": false,
             "data": data.data,
             "columns": data.columns,
@@ -130,7 +130,7 @@ if (isset($listeComposant)) {
               "data": null,
               "defaultContent": "<button type=\"button\" " +
                                         "class=\"btn btn-info btn-xs\"" +
-                                        "data-composant-id=\""+id+"\">" +
+                                        "data-component-id=\""+id+"\">" +
                                   "Ajouter" +
                                 "</button>",
             }]
@@ -163,28 +163,40 @@ if (isset($listeComposant)) {
     // Sélection d'un composant par l'utilisateur
     $('.composant .panel-body table').on('click', 'button', function() {
       // Récupérer l'id du composant pour savoir lequel on manipule
-      var composant_id = $(this).data('composant-id');
+      var component_id = $(this).data('component-id');
 
       // Récupérer le DataTable contenant le bouton "ajouter"
-      var table = $('#tbl-composant-'+composant_id).DataTable();
+      var table = $('#tbl-component-'+component_id).DataTable();
 
       // Récupérer les données du composant à ajouter
       var data = table.row($(this).parents('tr')).data();
       console.log(data);
 
       // Marqué le composant en tant que sélectionné
-      $('.selected-componant-'+composant_id).text(data["nom"]);
+      $('.selected-component-'+component_id).text(data["nom"]);
 
       // Afficher le bouton "supprimer"
-      $('#delete-componant-'+composant_id).show().data("composant-id", composant_id).data("composant-nom", data["nom"]);
+      var del_button = $('#delete-component-'+component_id).show();
+      del_button.attr("data-component-id", component_id);
+      del_button.attr("data-component-nom", data["nom"]);
 
       // TODO : Reload les données en rappelant getData() lorsqu'un composant est sélectionné par l'utilisateur
 
     });
 
     // Suppresion d'un composant par l'utilisateur
-    $("button[id^='delete-componant-']").click(function() {
-      var composant_id = $(this).data('composant-id');
+    $("button[id^='delete-component-']").click(function() {
+      // Récupérer l'id du composant pour savoir lequel on manipule
+      var component_id = $(this).data('component-id');
+
+      // Récupérer le nom du composant (correspond à l'id dans la base de données cette fois)
+      var component_name = $(this).data('component-nom');
+
+      // "Désélectionner" le composant
+      $('.selected-component-'+component_id).text("-");
+
+      // Cacher le bouton "supprimer"
+      $('#delete-component-'+component_id).hide();
     })
   });
 </script>
