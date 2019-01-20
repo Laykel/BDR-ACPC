@@ -133,6 +133,7 @@ if (isset($_GET['composant_id'])) {
             $data = $response->fetchAll();
             break;
         case 2: // Mémoire vive
+            // Colonnes à afficher pour le tableau des mémoires vives
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -143,10 +144,24 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT no, nom, frequence, typeConnecteurMemoireVive, nomTypeMemoireVive, ECC, prix
+            // Requête de base
+            $req = "SELECT no, Composant.nom, frequence, MemoireVive.typeConnecteurMemoireVive, MemoireVive.nomTypeMemoireVive, ECC, prix
                     FROM MemoireVive
                       INNER JOIN Composant
                         ON MemoireVive.noComposant = Composant.no";
+
+            // Prendre en compte une carte mère sélectionnée
+            if (array_key_exists("selected", $_SESSION['componentsList'][1])) {
+                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
+                $req .= " INNER JOIN ConnecteurMemoireVive
+                            ON MemoireVive.typeConnecteurMemoireVive = ConnecteurMemoireVive.type
+                          INNER JOIN TypeMemoireVive    
+                            ON MemoireVive.nomTypeMemoireVive = TypeMemoireVive.nom
+                          INNER JOIN CarteMere
+                            ON ConnecteurMemoireVive.type = CarteMere.typeConnecteurMemoireVive
+                                AND TypeMemoireVive.nom = CarteMere.nomTypeMemoireVive
+                           WHERE CarteMere.noComposant = " . $noCarteMere;
+            }
 
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
