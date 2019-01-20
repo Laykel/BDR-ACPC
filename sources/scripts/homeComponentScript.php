@@ -128,14 +128,11 @@ if (isset($_GET['composant_id'])) {
                     $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
                                     "CarteGraphique.noComposant = " . $noCarteGraphique;
                 }
-                // TODO : Bien retirer alimentation !
-                if ($noBoitier || $noAlimentation) {
-                    $req .= " INNER JOIN FacteurForme ON CarteMere.typeFacteurForme = FacteurForme.type";
-                    if ($noBoitier) {
-                        $req .= " INNER JOIN Boitier_FacteurForme
-                                    ON FacteurForme.type = Boitier_FacteurForme.typeFacteurForme";
-                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") . "noBoitier = " . $noBoitier;
-                    }
+                if ($noBoitier) {
+                    $req .= " INNER JOIN FacteurForme ON CarteMere.typeFacteurForme = FacteurForme.type
+                              INNER JOIN Boitier_FacteurForme
+                                ON FacteurForme.type = Boitier_FacteurForme.typeFacteurForme";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") . "noBoitier = " . $noBoitier;
                 }
 
 
