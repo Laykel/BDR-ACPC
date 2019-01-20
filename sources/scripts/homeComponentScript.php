@@ -135,7 +135,6 @@ if (isset($_GET['composant_id'])) {
                     $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") . "noBoitier = " . $noBoitier;
                 }
 
-
                 $req .= $whereClause;
             }
 
@@ -213,6 +212,18 @@ if (isset($_GET['composant_id'])) {
                     $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
                                     "CarteMere.noComposant = " . $noCarteMere;
                 }
+                if ($noAlimentation) {
+                    $req .= " INNER JOIN CarteGraphique_ConnecteurAlim
+                                ON CarteGraphique.noComposant = CarteGraphique_ConnecteurAlim.noCarteGraphique
+                              INNER JOIN ConnecteurAlim
+                                ON CarteGraphique_ConnecteurAlim.typeConnecteurAlim = ConnecteurAlim.type
+                              INNER JOIN Alimentation_ConnecteurAlim
+                                ON ConnecteurAlim.type = Alimentation_ConnecteurAlim.typeConnecteurAlim";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "noAlimentation = " . $noAlimentation . " AND " .
+                                    "Alimentation_ConnecteurAlim.nombre >= CarteGraphique_ConnecteurAlim.nombre";
+                }
+
                 $req .= $whereClause;
             }
 
