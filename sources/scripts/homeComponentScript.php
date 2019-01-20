@@ -64,14 +64,14 @@ if (isset($_GET['composant_id'])) {
             break;
         case 3: // Carte graphique
             $columns = [
-                ["title" => "Nom", "data" => "nomComposant"],
+                ["title" => "Nom", "data" => "nom"],
                 ["title" => "Puce graphique", "data" => "nomPuceGraphique"],
                 ["title" => "Mémoire", "data" => "capaciteMemoireGraphique"],
                 ["title" => "Fréquence", "data" => "frequencePuceGraphique"],
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT Composant.nom AS 'nomComposant', PuceGraphique.nom AS 'nomPuceGraphique',
+            $req = "SELECT Composant.nom, PuceGraphique.nom AS 'nomPuceGraphique',
                            capaciteMemoireGraphique, frequencePuceGraphique, prix
                     FROM CarteGraphique
                       INNER JOIN Composant
