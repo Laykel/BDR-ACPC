@@ -72,7 +72,7 @@ if (isset($_GET['composant_id'])) {
             ];
 
             // Requête de base
-            $req = "SELECT no, Composant.nom, nomSocket, typeFacteurForme, nbEmplacementsRAM, capaciteRAMMax, CarteMere.nomTypeMemoireVive, nomConstructeur, prix
+            $req = "SELECT no, Composant.nom, CarteMere.nomSocket, typeFacteurForme, nbEmplacementsRAM, capaciteRAMMax, CarteMere.nomTypeMemoireVive, nomConstructeur, prix
                     FROM CarteMere
                       INNER JOIN Composant
                         ON CarteMere.noComposant = Composant.no";
@@ -101,6 +101,21 @@ if (isset($_GET['composant_id'])) {
 
                     $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
                                     "MemoireVive.noComposant = " . $noMemoireVive;
+                }
+                if ($noProcesseur || $noRefroidisseur) {
+                    $req .= " INNER JOIN Socket ON CarteMere.nomSocket = Socket.nom";
+                    if ($noProcesseur) {
+                        $req .= " INNER JOIN Processeur ON Socket.nom = Processeur.nomSocket";
+                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                        "Processeur.noComposant = " . $noProcesseur;
+                    }
+                    if ($noRefroidisseur) {
+                        $req .= " INNER JOIN Refroidisseur_Socket ON Socket.nom = Refroidisseur_Socket.nomSocket
+                                  INNER JOIN Refroidisseur 
+                                    ON Refroidisseur_Socket.noRefroidisseur = Refroidisseur.noComposant";
+                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                        "noRefroidisseur = " . $noRefroidisseur;
+                    }
                 }
 
                 $req .= $whereClause;
