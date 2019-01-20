@@ -69,11 +69,11 @@ PHP version : 7.2.13
 </div>
 
 <?php
-if (isset($listeComposant)) {
+if (isset($componentsList)) {
 ?>
     <h4 id="composant-titre">Liste des composants</h4>
 <?php
-    foreach($listeComposant as $key=>$composant) {
+    foreach($componentsList as $key=>$component) {
 ?>
         <div class="center-block composant">
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -86,7 +86,7 @@ if (isset($listeComposant)) {
                      href="#collapseComposant<?php echo $key; ?>"
                      aria-expanded="true"
                      aria-controls="collapseComposant<?php echo $key; ?>">
-                    <?php echo $composant; ?>
+                    <?php echo $component['label']; ?>
                   </a>
                 </h4>
               </div>
@@ -107,7 +107,7 @@ if (isset($listeComposant)) {
 <script>
   /**
    * Permet de charger les données d'un composant en AJAX.
-   * @param id id du composant en question (correspond à l'index de la liste $listeComposant)
+   * @param id id du composant en question (correspond à l'index de la liste $componentsList)
    */
   function getData(id) {
     $.ajax({
@@ -133,10 +133,15 @@ if (isset($listeComposant)) {
                                         "data-component-id=\""+id+"\">" +
                                   "Ajouter" +
                                 "</button>",
+            },
+            {
+              "targets": [0],
+              "visible": false,
             }]
           });
         } else {
-          // TODO clear DataTable
+          // Rechargement des données dans le DataTable (car un composant a été sélectionné)
+          $('#tbl-component-'+id).DataTable().clear().rows.add(data.data).draw();
         }
       }
     });
@@ -176,11 +181,19 @@ if (isset($listeComposant)) {
       $('.selected-component-'+component_id).text(data["nom"]);
 
       // Afficher le bouton "supprimer"
-      var del_button = $('#delete-component-'+component_id).show();
-      del_button.attr("data-component-id", component_id);
-      del_button.attr("data-component-nom", data["nom"]);
+      $('#delete-component-'+component_id).show().attr("data-component-id", component_id);
 
-      // TODO : Reload les données en rappelant getData() lorsqu'un composant est sélectionné par l'utilisateur
+      // Recharger les données de chaque composant en fonction du composant sélectionné
+      $.ajax({
+        url: '<?php echo ROOT."/sources/scripts/homeScript.php"; ?>',
+        type: 'POST',
+        data: 'action=add&component-id='+component_id+'&component-no='+data["no"],
+        success: function() {
+          <?php if (isset($componentsList)) { foreach($componentsList as $key=>$component) { ?>
+            getData(<?php echo $key; ?>);
+          <?php }} ?>
+        }
+      });
 
     });
 
@@ -189,14 +202,23 @@ if (isset($listeComposant)) {
       // Récupérer l'id du composant pour savoir lequel on manipule
       var component_id = $(this).data('component-id');
 
-      // Récupérer le nom du composant (correspond à l'id dans la base de données cette fois)
-      var component_name = $(this).data('component-nom');
-
       // "Désélectionner" le composant
       $('.selected-component-'+component_id).text("-");
 
       // Cacher le bouton "supprimer"
       $('#delete-component-'+component_id).hide();
+
+      // Recharger les données de chaque composant en fonction du composant sélectionné
+      $.ajax({
+        url: '<?php echo ROOT."/sources/scripts/homeScript.php"; ?>',
+        type: 'POST',
+        data: 'action=delete&component-id='+component_id,
+        success: function(data) {
+          <?php if (isset($componentsList)) { foreach($componentsList as $key=>$component) { ?>
+            getData(<?php echo $key; ?>);
+          <?php }} ?>
+        }
+      });
     })
   });
 </script>

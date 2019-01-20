@@ -18,7 +18,6 @@ PHP version : 7.2.13
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-session_start();
 
 // Définition du chemin d'accès au document racine
 define('ROOT', dirname('index.php'));

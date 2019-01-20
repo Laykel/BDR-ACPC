@@ -22,7 +22,6 @@ PHP version : 7.2.13
           class="btn btn-danger btn-xs"
           id="delete-component-<?php echo $key; ?>"
           data-component-id=""
-          data-component-nom=""
           style="display: none;">
     Supprimer
   </button>
