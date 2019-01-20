@@ -1,14 +1,15 @@
 <?php
-session_start();
 
+session_start();
 require "../model/dbRequest.php";
 
 if (isset($_GET['composant_id'])) {
-    $componentId = $_GET['composant_id'];
+    $componentId = $_GET['composant_id'];   // Id du composant (correspond à l'index de la liste $componentsList)
 
-    // Le composantId est à traiter en fonction du tableau $componentsList dans homeScript.php
+    // Le $componentId est à traiter en fonction du tableau $componentsList dans homeScript.php
     switch ($componentId) {
         case 0: // Processeur
+            // Colonnes à afficher pour le tableau des processseurs
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -46,7 +47,6 @@ if (isset($_GET['composant_id'])) {
                     $req .= " INNER JOIN Refroidisseur_Socket ON Socket.nom = Refroidisseur_Socket.nomSocket
                               INNER JOIN Refroidisseur 
                                 ON Refroidisseur_Socket.noRefroidisseur = Refroidisseur.noComposant";
-
                     $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
                                     "noRefroidisseur = " . $noRefroidisseur;
                 }
@@ -58,6 +58,7 @@ if (isset($_GET['composant_id'])) {
             $data = $response->fetchAll();
             break;
         case 1: // Carte mère
+            // Colonnes à afficher pour le tableau des cartes mères
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -70,10 +71,40 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT no, nom, nomSocket, typeFacteurForme, nbEmplacementsRAM, capaciteRAMMax, nomTypeMemoireVive, nomConstructeur, prix
+            // Requête de base
+            $req = "SELECT no, Composant.nom, nomSocket, typeFacteurForme, nbEmplacementsRAM, capaciteRAMMax, CarteMere.nomTypeMemoireVive, nomConstructeur, prix
                     FROM CarteMere
                       INNER JOIN Composant
                         ON CarteMere.noComposant = Composant.no";
+
+            // Prendre en compte une mémoire vive, un processeur, un refroidisseur et une carte graphique sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][2]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][0]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][4]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][3])) {
+
+                $noMemoireVive = $_SESSION['componentsList'][2]['selected'];
+                $noProcesseur = $_SESSION['componentsList'][0]['selected'];
+                $noRefroidisseur = $_SESSION['componentsList'][4]['selected'];
+                $noCarteGraphique = $_SESSION['componentsList'][3]['selected'];
+
+                $whereClause = "";
+
+                if ($noMemoireVive) {
+                    $req .= " INNER JOIN ConnecteurMemoireVive 
+                                ON CarteMere.typeConnecteurMemoireVive = ConnecteurMemoireVive.type
+                              INNER JOIN TypeMemoireVive 
+                                ON CarteMere.nomTypeMemoireVive = TypeMemoireVive.nom
+                              INNER JOIN MemoireVive
+                                ON ConnecteurMemoireVive.type = MemoireVive.typeConnecteurMemoireVive
+                                  AND TypeMemoireVive.nom = MemoireVive.nomTypeMemoireVive";
+
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "MemoireVive.noComposant = " . $noMemoireVive;
+                }
+
+                $req .= $whereClause;
+            }
 
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
