@@ -117,6 +117,14 @@ if (isset($_GET['composant_id'])) {
                                         "noRefroidisseur = " . $noRefroidisseur;
                     }
                 }
+                if ($noCarteGraphique) {
+                    $req .= " INNER JOIN EmplacementCarteGraphique
+                                ON CarteMere.connecteurEmplacementCarteGraphique = EmplacementCarteGraphique.connecteur
+                              INNER JOIN CarteGraphique
+                                ON EmplacementCarteGraphique.connecteur = CarteGraphique.connecteurEmplacementCarteGraphique";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "CarteGraphique.noComposant = " . $noCarteGraphique;
+                }
 
                 $req .= $whereClause;
             }
