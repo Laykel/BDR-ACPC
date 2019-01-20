@@ -157,6 +157,11 @@ COLLAPSIBLE PANEL - COMPOSANT
     content: '';
 }
 
+.composant [id^="selected-icon-"]:before {
+    font-family: 'Glyphicons Halflings';
+    content: "\e013";
+}
+
 .btn-group-xs > .btn, .btn-xs {
     padding: .15rem .2rem;
     font-size: .875rem;

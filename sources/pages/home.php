@@ -87,6 +87,7 @@ if (isset($componentsList)) {
                      aria-expanded="true"
                      aria-controls="collapseComposant<?php echo $key; ?>">
                     <?php echo $component['label']; ?>
+                    <span id="selected-icon-<?php echo $key; ?>" style="display: none;"></span>
                   </a>
                 </h4>
               </div>
@@ -179,6 +180,7 @@ if (isset($componentsList)) {
 
       // Marqué le composant en tant que sélectionné
       $('.selected-component-'+component_id).text(data["nom"]);
+      $('#selected-icon-'+component_id).show();
 
       // Afficher le bouton "supprimer"
       $('#delete-component-'+component_id).show().attr("data-component-id", component_id);
@@ -204,6 +206,7 @@ if (isset($componentsList)) {
 
       // "Désélectionner" le composant
       $('.selected-component-'+component_id).text("-");
+      $('#selected-icon-'+component_id).hide();
 
       // Cacher le bouton "supprimer"
       $('#delete-component-'+component_id).hide();
