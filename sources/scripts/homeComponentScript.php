@@ -25,14 +25,33 @@ if (isset($_GET['composant_id'])) {
                       INNER JOIN Composant
                         ON Processeur.noComposant = Composant.no";
 
-            // Prendre en compte une carte mère sélectionnée
-            if (array_key_exists("selected", $_SESSION['componentsList'][1])) {
+            // Prendre en compte une carte mère et/ou un refroidisseur sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][1]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][4])) {
+
                 $noCarteMere = $_SESSION['componentsList'][1]['selected'];
-                $req .= " INNER JOIN Socket
-                            ON Processeur.nomSocket = Socket.nom
-                          INNER JOIN CarteMere
-                            ON Socket.nom = CarteMere.nomSocket
-                          WHERE CarteMere.noComposant = " . $noCarteMere;
+                $noRefroidisseur = $_SESSION['componentsList'][4]['selected'];
+
+                $req .= " INNER JOIN Socket ON Processeur.nomSocket = Socket.nom";
+
+                // Par défaut, il n'y pas de clause WHERE
+                $whereClause = "";
+
+                if ($noCarteMere) {
+                    $req .= " INNER JOIN CarteMere ON Socket.nom = CarteMere.nomSocket";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "CarteMere.noComposant = " . $noCarteMere;
+                }
+                if ($noRefroidisseur) {
+                    $req .= " INNER JOIN Refroidisseur_Socket ON Socket.nom = Refroidisseur_Socket.nomSocket
+                              INNER JOIN Refroidisseur 
+                                ON Refroidisseur_Socket.noRefroidisseur = Refroidisseur.noComposant";
+
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "noRefroidisseur = " . $noRefroidisseur;
+                }
+
+                $req .= $whereClause;
             }
 
             $response = dbRequest($req, 'select');
