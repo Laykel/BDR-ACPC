@@ -78,20 +78,18 @@ if (isset($_GET['composant_id'])) {
                         ON CarteMere.noComposant = Composant.no";
 
             // Prendre en compte une mémoire vive, un processeur, un refroidisseur, une carte graphique,
-            // un boîtier et une alimentation sélectionné
+            // un boîtier sélectionné
             if (array_key_exists("selected", $_SESSION['componentsList'][2]) ||
                 array_key_exists("selected", $_SESSION['componentsList'][0]) ||
                 array_key_exists("selected", $_SESSION['componentsList'][4]) ||
                 array_key_exists("selected", $_SESSION['componentsList'][3]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][7]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][8])) {
+                array_key_exists("selected", $_SESSION['componentsList'][7])) {
 
                 $noMemoireVive = $_SESSION['componentsList'][2]['selected'];
                 $noProcesseur = $_SESSION['componentsList'][0]['selected'];
                 $noRefroidisseur = $_SESSION['componentsList'][4]['selected'];
                 $noCarteGraphique = $_SESSION['componentsList'][3]['selected'];
                 $noBoitier = $_SESSION['componentsList'][7]['selected'];
-                $noAlimentation = $_SESSION['componentsList'][8]['selected'];
 
                 $whereClause = "";
 
@@ -136,13 +134,6 @@ if (isset($_GET['composant_id'])) {
                         $req .= " INNER JOIN Boitier_FacteurForme
                                     ON FacteurForme.type = Boitier_FacteurForme.typeFacteurForme";
                         $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") . "noBoitier = " . $noBoitier;
-                    }
-                    // TODO Vérifier si cohérent ce merdier :
-                    if ($noAlimentation) {
-                        $req .= " INNER JOIN Alimentation
-                                    ON FacteurForme.type = Alimentation.typeFacteurForme";
-                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
-                                        "Alimentation.noComposant = " . $noAlimentation;
                     }
                 }
 
