@@ -122,12 +122,13 @@ if (isset($_GET['composant_id'])) {
                 }
                 if ($noCarteGraphique) {
                     $req .= " INNER JOIN EmplacementCarteGraphique
-                                ON CarteMere.connecteurEmplacementCarteGraphique = EmplacementCarteGraphique.connecteur
+                                ON CarteMere.typeEmplacementCarteGraphique = EmplacementCarteGraphique.type
                               INNER JOIN CarteGraphique
-                                ON EmplacementCarteGraphique.connecteur = CarteGraphique.connecteurEmplacementCarteGraphique";
+                                ON EmplacementCarteGraphique.type = CarteGraphique.typeEmplacementCarteGraphique";
                     $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
                                     "CarteGraphique.noComposant = " . $noCarteGraphique;
                 }
+                // TODO : Bien retirer alimentation !
                 if ($noBoitier || $noAlimentation) {
                     $req .= " INNER JOIN FacteurForme ON CarteMere.typeFacteurForme = FacteurForme.type";
                     if ($noBoitier) {
@@ -171,7 +172,7 @@ if (isset($_GET['composant_id'])) {
                             ON MemoireVive.nomTypeMemoireVive = TypeMemoireVive.nom
                           INNER JOIN CarteMere
                             ON ConnecteurMemoireVive.type = CarteMere.typeConnecteurMemoireVive
-                                AND TypeMemoireVive.nom = CarteMere.nomTypeMemoireVive
+                              AND TypeMemoireVive.nom = CarteMere.nomTypeMemoireVive
                            WHERE CarteMere.noComposant = " . $noCarteMere;
             }
 
@@ -179,6 +180,7 @@ if (isset($_GET['composant_id'])) {
             $data = $response->fetchAll();
             break;
         case 3: // Carte graphique
+            // Colonnes à afficher pour le tableau des cartes graphiques
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -188,6 +190,7 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
+            // Requête de base
             $req = "SELECT no, Composant.nom, PuceGraphique.nom AS 'nomPuceGraphique',
                            capaciteMemoireGraphique, frequencePuceGraphique, prix
                     FROM CarteGraphique
@@ -195,6 +198,26 @@ if (isset($_GET['composant_id'])) {
                         ON CarteGraphique.noComposant = Composant.no
                       INNER JOIN PuceGraphique
                         ON CarteGraphique.nomPuceGraphique = PuceGraphique.nom";
+
+            // Prendre en compte une carte mère et une alimentation sélectionnée
+            if (array_key_exists("selected", $_SESSION['componentsList'][1]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][8])) {
+
+                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
+                $noAlimentation = $_SESSION['componentsList'][8]['selected'];
+
+                $whereClause = "";
+
+                if ($noCarteMere) {
+                    $req .= " INNER JOIN EmplacementCarteGraphique 
+                                ON CarteGraphique.typeEmplacementCarteGraphique = EmplacementCarteGraphique.type
+                              INNER JOIN CarteMere
+                                ON EmplacementCarteGraphique.type = CarteMere.typeEmplacementCarteGraphique";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "CarteMere.noComposant = " . $noCarteMere;
+                }
+                $req .= $whereClause;
+            }
 
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
