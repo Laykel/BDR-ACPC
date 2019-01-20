@@ -101,7 +101,7 @@ VALUES
 (16, '4-pin Floppy', 1), (16, '15-pin S-ATA', 10), (16, '6+2 broches PCIe', 4),
 (25, '20+4-pin ATX', 1), (25, '4+4-pin 12V', 1), (25, '4-pin Molex', 4),
 (25, '15-pin S-ATA', 6), (25, '6+2 broches PCIe', 4),
-(33,'20+4-pin ATX',1), (33,'4+4-pin 12V',1), (33,'4-pin Molex', 2), 
+(33,'20+4-pin ATX',1), (33,'4+4-pin 12V',1), (33,'4-pin Molex', 2),
 (33, '4-pin Floppy', 1),(33, '15-pin S-ATA', 3), (33, '6+2 broches PCIe', 1);
 
 INSERT INTO `ACPC`.`EmplacementMemoireMorte`
