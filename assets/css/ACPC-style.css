@@ -196,3 +196,21 @@ FILTRE FORM
     background-color: #2D7CBE;
     border-color: #2D7CBE;
 }
+
+/*
+==========
+PAGINATION
+==========
+ */
+.page-item .page-link {
+    color: #2D7CBE !important;
+}
+
+.page-link {
+    background-color: #fff !important;
+    border: 1px solid #dee2e6 !important;
+}
+
+.page-link:hover {
+    background-color: #e9ecef !important;
+}
