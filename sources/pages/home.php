@@ -142,9 +142,8 @@ if (isset($componentsList)) {
       type: 'GET',
       data: 'composant_id='+id,
       success: function(data) {
-        console.log("avant erreur");
         data = JSON.parse(data);
-        console.log("après erreur");
+        console.log(data + "\n\n");
 
         // Création des tableaux pour chaque composant
         if (!$.fn.DataTable.isDataTable('#tbl-component-'+id)) {

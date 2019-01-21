@@ -287,7 +287,7 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
                 ["title" => "Capacité [GB]", "data" => "capacite"],
-                ["title" => "Vitesse écriture", "data" => "vitesseEcriture"],
+                ["title" => "Vitesse d'écriture", "data" => "vitesseEcriture"],
                 ["title" => "Vitesse de lecture", "data" => "vitesseLecture"],
                 ["title" => "Prix", "data" => "prix"],
             ];
