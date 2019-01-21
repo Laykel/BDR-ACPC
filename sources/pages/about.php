@@ -1,3 +1,13 @@
+<!--
+---------------------------------------------------------------
+Fichier     : about.php
+Date        : 21.12.2018
+Auteurs     : Gilliand Loris - Tutic Mateo - Wachter Luc
+Fonction    : Page about.
+PHP version : 7.2.13
+---------------------------------------------------------------
+-->
+
 <div>
    <h1>A propos de l'assistant de configuration PC</h1>
 

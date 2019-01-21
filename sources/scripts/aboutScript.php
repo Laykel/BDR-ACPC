@@ -1,10 +1,10 @@
 <?php
 //---------------------------------------------------------------
-//Filename: homeScript.php
-//Creation date: 09.05.2017
-//Author: Luc Wachter
-//Function: The script part of the about page:
-//			gets projects and tasks data, execute changes in DB.
+// Fichier     : aboutScript.php
+// Date        : 21.12.2018
+// Auteurs     : Gilliand Loris - Tutic Mateo - Wachter Luc
+// Fonction    : La partie script de la page "à propos".
+// PHP version : 7.2.13
 //---------------------------------------------------------------
 
 $title = "ACPC - A propos";

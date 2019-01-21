@@ -1,4 +1,17 @@
 <?php
+//---------------------------------------------------------------
+// Fichier     : homeComponentScript.php
+// Date        : 21.12.2018
+// Auteurs     : Gilliand Loris - Tutic Mateo - Wachter Luc
+// Fonction    : La partie script pour lister chaque composant.
+//               Pour chaque type de composant à afficher, on
+//               fait appel à ce script en AJAX. Ce dernier va
+//               générer les colonnes ainsi que les données à
+//               afficher pour le composant en question. Ce
+//               script nécessite donc le paramètre composant_id
+//               représentant le type du composant.
+// PHP version : 7.2.13
+//---------------------------------------------------------------
 
 session_start();
 require "../model/dbRequest.php";

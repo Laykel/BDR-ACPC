@@ -1,6 +1,12 @@
-<!-- 
-Filename: unknown.php
-Description: Page displayed when the user tries to access inexisting pages.
+<!--
+---------------------------------------------------------------
+Fichier     : unknown.php
+Date        : 21.12.2018
+Auteurs     : Gilliand Loris - Tutic Mateo - Wachter Luc
+Fonction    : Page affichée lorsque l'utilisateur essaie
+              d'accéder à une page inexistante.
+PHP version : 7.2.13
+---------------------------------------------------------------
 -->
 
 <div class="row">

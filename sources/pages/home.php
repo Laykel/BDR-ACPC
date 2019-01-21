@@ -1,18 +1,12 @@
 <!--
-/*
------------------------------------------------------------------------------------
-Projet      : ACPC
+---------------------------------------------------------------
 Fichier     : home.php
-Auteur(s)   : Gilliand Loris - Tutic Mateo - Wachter Luc
 Date        : 21.12.2018
-
-But         : Page home. Permet de réaliser une configuration d'un PC.
-
-Remarque(s) : -
-
+Auteurs     : Gilliand Loris - Tutic Mateo - Wachter Luc
+Fonction    : Page home. Permet de réaliser une configuration
+              d'un PC.
 PHP version : 7.2.13
------------------------------------------------------------------------------------
-*/
+---------------------------------------------------------------
 -->
 
 <div class="center-block">

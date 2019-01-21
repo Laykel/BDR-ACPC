@@ -1,11 +1,16 @@
 <?php
 //---------------------------------------------------------------
-//Filename: homeScript.php
-//Creation date: 09.05.2017
-//Author: Luc Wachter
-//Function: The script part of the home page:
-//			gets projects and tasks data, execute changes in DB.
+// Fichier     : homeScript.php
+// Date        : 21.12.2018
+// Auteurs     : Gilliand Loris - Tutic Mateo - Wachter Luc
+// Fonction    : La partie script de la page "accueil". Gère
+//               principalement le formulaire de filtres, l'ajout
+//               et la suppresion d'un composant par
+//               l'utilisateur ainsi que la génération de la
+//               liste des composants sélectionnés.
+// PHP version : 7.2.13
 //---------------------------------------------------------------
+
 session_start();
 
 $title = "ACPC - Accueil";

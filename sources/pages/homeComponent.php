@@ -1,18 +1,11 @@
 <!--
-/*
------------------------------------------------------------------------------------
-Projet      : ACPC
+---------------------------------------------------------------
 Fichier     : homeComponent.php
-Auteur(s)   : Gilliand Loris - Tutic Mateo - Wachter Luc
 Date        : 21.12.2018
-
-But         : Représenter le panel collapsible d'un composant.
-
-Remarque(s) : -
-
+Auteurs     : Gilliand Loris - Tutic Mateo - Wachter Luc
+Fonction    : Représenter le panel collapsible d'un composant
 PHP version : 7.2.13
------------------------------------------------------------------------------------
-*/
+---------------------------------------------------------------
 -->
 
 <p class="font-weight-bold">

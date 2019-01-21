@@ -1,18 +1,11 @@
 <?php
-/*
------------------------------------------------------------------------------------
-Projet      : ACPC
-Fichier     : index.php
-Auteur(s)   : Gilliand Loris - Tutic Mateo - Wachter Luc
-Date        : 21.12.2018
-
-But         : Page principale de l'application web
-
-Remarque(s) : Inclus les différents scripts et pages secondaires
-
-PHP version : 7.2.13
------------------------------------------------------------------------------------
-*/
+//---------------------------------------------------------------
+// Fichier     : index.php
+// Date        : 21.12.2018
+// Auteurs     : Gilliand Loris - Tutic Mateo - Wachter Luc
+// Fonction    : Page principale de l'application web
+// PHP version : 7.2.13
+//---------------------------------------------------------------
 
 // AFFICHAGE DES ERREURS PHP - A SUPPRIMER
 error_reporting(E_ALL);

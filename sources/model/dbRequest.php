@@ -1,19 +1,15 @@
 <?php
-/*
------------------------------------------------------------------------------------
-Projet      : ACPC
-Fichier     : dbRequest.php
-Auteur(s)   : Gilliand Loris - Tutic Mateo - Wachter Luc
-Date        : 26.12.2018
+//---------------------------------------------------------------
+// Fichier     : dbRequest.php
+// Date        : 21.12.2018
+// Auteurs     : Gilliand Loris - Tutic Mateo - Wachter Luc
+// Fonction    : Définit la fonction gérant les requêtes à la
+//               base de données. La valeur de retour de
+//               dbRequest est un objet PDOStatement dans le cas
+//               d'un insert, mais un simple int sinon
+// PHP version : 7.2.13
+//---------------------------------------------------------------
 
-But         : Définit la fonction gérant les requêtes à la base de données
-
-Remarque(s) : La valeur de retour de dbRequest est un objet PDOStatement dans
-              le cas d'un insert, mais un simple int sinon
-
-PHP version : 7.2.13
------------------------------------------------------------------------------------
-*/
 
 // Retourne les données de la BD dans le cas d'un SELECT
 // et l'id du résultat dans le cas d'un INSERT ou d'un UPDATE
