@@ -1091,7 +1091,10 @@ INSERT INTO `ACPC`.`CarteMere_Port`
  `nombre`)
 VALUES
 (1, 'HDMI', 1), (1, 'DVI-D', 1), (1, 'VGA', 1),
-(10, 'DVI-D', 1), (10, 'HDMI', 1);
+(10, 'DVI-D', 1), (10, 'HDMI', 1),
+(28, 'DVI-D', 1), (28, 'HDMI', 2),
+(35, 'DVI-D', 1), (35, 'HDMI', 1), (35, 'VGA', 1),
+(44, 'DVI-D', 1), (44, 'HDMI', 1);
 
 INSERT INTO `ACPC`.`MemoireMorte`
 (`noComposant`,
