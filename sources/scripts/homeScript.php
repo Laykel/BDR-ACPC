@@ -16,6 +16,10 @@ $showFilters = true;
 // Gestion des filtres
 if (isset($_POST['PCtype']) && isset($_POST['PCbudget'])) {
     // TODO Prendre en compte les champs du formulaire
+    // Une fois le formulaire des filtres saisis, on ferme le panel des filtres
+    $showFilters = false;
+
+    // Gestion du budget maximum saisi par l'utilisateur
     $PCBudgetInput = $_POST['PCbudget'];
     $PCBudget = 0;
 
@@ -26,21 +30,25 @@ if (isset($_POST['PCtype']) && isset($_POST['PCbudget'])) {
         $_SESSION['budget'] = $PCBudget;
     }
 
-    // Une fois le formulaire des filtres saisis, on ferme le panel des filtres
-    $showFilters = false;
+    // Gestion du type de PC - détermine si PC est pour le gaming
+    $PCTypeInput = $_POST['PCtype'];
+    $PCGaming = $PCTypeInput == "gaming" ? true : false;
 
     // Liste des composants d'un PC avec leur "propriétés"
     $componentsList = [
-        ["label" => "Processeur"],
-        ["label" => "Carte mère"],
-        ["label" => "Mémoire vive"],
-        ["label" => "Carte graphique"],
-        ["label" => "Refroidisseur"],
-        ["label" => "SSD"],
-        ["label" => "Disque dur"],
-        ["label" => "Boitier"],
-        ["label" => "Alimentation"]
+        ["label" => "Processeur", "hide" => false],
+        ["label" => "Carte mère", "hide" => false],
+        ["label" => "Mémoire vive", "hide" => false],
+        ["label" => "Carte graphique", "hide" => false],
+        ["label" => "Refroidisseur", "hide" => false],
+        ["label" => "SSD", "hide" => false],
+        ["label" => "Disque dur", "hide" => false],
+        ["label" => "Boitier", "hide" => false],
+        ["label" => "Alimentation", "hide" => false]
     ];
+
+    // Cacher la carte graphique si le PC n'est pas gaming (choix d'implémentation)
+    $componentsList[3]["hide"] = !$PCGaming ? true : false;
 
     // Ajout de la liste dans la session pour pouvoir y accéder ailleur
     $_SESSION['componentsList'] = $componentsList;

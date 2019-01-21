@@ -41,12 +41,14 @@ PHP version : 7.2.13
               <div class="col-sm-6">
                 <div class="custom-radio form-check form-check-inline">
                   <input type="radio" id="radio-bureautique" name="PCtype"
-                         class="custom-control-input form-check-input" checked="">
+                         class="custom-control-input form-check-input" checked=""
+                         value="bureautique">
                   <label class="custom-control-label form-check-label" for="radio-bureautique">Bureautique</label>
                 </div>
                 <div class="custom-radio form-check form-check-inline">
                   <input type="radio" id="radio-gaming" name="PCtype"
-                         class="custom-control-input form-check-input">
+                         class="custom-control-input form-check-input"
+                         value="gaming">
                   <label class="custom-control-label form-check-label" for="radio-gaming">Gaming</label>
                 </div>
               </div>
@@ -76,33 +78,35 @@ if (isset($componentsList)) {
     </h4>
 <?php
     foreach($componentsList as $key=>$component) {
+        if (!$component['hide']) {
 ?>
-        <div class="center-block composant">
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="heading-composant-<?php echo $key; ?>">
-                <h4 class="panel-title">
-                  <a role="button"
-                     data-toggle="collapse"
-                     data-parent="#accordion"
-                     href="#collapseComposant<?php echo $key; ?>"
-                     aria-expanded="true"
-                     aria-controls="collapseComposant<?php echo $key; ?>">
-                    <?php echo $component['label']; ?>
-                    <span id="selected-icon-<?php echo $key; ?>" style="display: none;"></span>
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseComposant<?php echo $key; ?>" class="panel-collapse collapse in"
-                   role="tabpanel" aria-labelledby="heading-composant-<?php echo $key; ?>">
-                <div class="panel-body">
-                  <?php include(ROOT."/sources/pages/homeComponent.php"); ?>
+          <div class="center-block composant">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading-composant-<?php echo $key; ?>">
+                  <h4 class="panel-title">
+                    <a role="button"
+                       data-toggle="collapse"
+                       data-parent="#accordion"
+                       href="#collapseComposant<?php echo $key; ?>"
+                       aria-expanded="true"
+                       aria-controls="collapseComposant<?php echo $key; ?>">
+                      <?php echo $component['label']; ?>
+                      <span id="selected-icon-<?php echo $key; ?>" style="display: none;"></span>
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseComposant<?php echo $key; ?>" class="panel-collapse collapse in"
+                     role="tabpanel" aria-labelledby="heading-composant-<?php echo $key; ?>">
+                  <div class="panel-body">
+                    <?php include(ROOT."/sources/pages/homeComponent.php"); ?>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 <?php
+        }
     }
 ?>
   <!-- Bouton pour générer la configuration du PC -->
