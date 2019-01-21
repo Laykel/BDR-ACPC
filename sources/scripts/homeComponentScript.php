@@ -231,6 +231,7 @@ if (isset($_GET['composant_id'])) {
             $data = $response->fetchAll();
             break;
         case 4: // Refroidisseur
+            // Colonnes à afficher pour le tableau des refroidisseurs
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -240,15 +241,48 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT no, nom, hauteur, refroidissementLiquide, helice, prix
+            // Requête de base
+            $req = "SELECT no, Composant.nom, hauteur, refroidissementLiquide, helice, prix
                     FROM Refroidisseur
                       INNER JOIN Composant
                         ON Refroidisseur.noComposant = Composant.no";
+
+            // Prendre en compte un processeur et une carte mère sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][0]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][1])) {
+
+                $noProcesseur = $_SESSION['componentsList'][0]['selected'];
+                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
+
+                $whereClause = "";
+
+                if ($noProcesseur || $noCarteMere) {
+                    $req .= " INNER JOIN Refroidisseur_Socket
+                                ON Refroidisseur.noComposant = Refroidisseur_Socket.noRefroidisseur
+                              INNER JOIN Socket
+                                ON Refroidisseur_Socket.nomSocket = Socket.nom";
+                    if ($noProcesseur) {
+                        $req .= " INNER JOIN Processeur
+                                    ON Socket.nom = Processeur.nomSocket";
+                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                        "Processeur.noComposant = " . $noProcesseur;
+                    }
+                    if ($noCarteMere) {
+                        $req .= " INNER JOIN CarteMere
+                                    ON Socket.nom = CarteMere.nomSocket";
+                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                        "CarteMere.noComposant = " . $noCarteMere;
+                    }
+                }
+
+                $req .= $whereClause;
+            }
 
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
             break;
         case 5: // SSD
+            // Colonnes à afficher pour le tableau des SSD
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -258,6 +292,7 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
+            // Requête de base
             $req = "SELECT no, nom, capacite, vitesseEcriture, vitesseLecture, prix
                     FROM SSD
                       INNER JOIN MemoireMorte
@@ -265,10 +300,21 @@ if (isset($_GET['composant_id'])) {
                       INNER JOIN Composant
                         ON MemoireMorte.noComposant = Composant.no";
 
+            // Prendre en compte un boitier sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][7])) {
+                $noBoitier = $_SESSION['componentsList'][7]['selected'];
+                $req .= " INNER JOIN EmplacementMemoireMorte
+                            ON MemoireMorte.typeEmplacementMemoireMorte = EmplacementMemoireMorte.type
+                          INNER JOIN Boitier_EmplacementMemoireMorte
+                            ON EmplacementMemoireMorte.type = Boitier_EmplacementMemoireMorte.typeEmplacementMemoireMorte
+                          WHERE noBoitier = " . $noBoitier;
+            }
+
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
             break;
         case 6: // HDD
+            // Colonnes à afficher pour le tableau des HDD
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -277,6 +323,7 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
+            // Requête de base
             $req = "SELECT no, nom, capacite, nbToursParMinuteMax, prix
                     FROM HDD
                       INNER JOIN MemoireMorte
@@ -284,10 +331,21 @@ if (isset($_GET['composant_id'])) {
                       INNER JOIN Composant
                         ON MemoireMorte.noComposant = Composant.no";
 
+            // Prendre en compte un boitier sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][7])) {
+                $noBoitier = $_SESSION['componentsList'][7]['selected'];
+                $req .= " INNER JOIN EmplacementMemoireMorte
+                            ON MemoireMorte.typeEmplacementMemoireMorte = EmplacementMemoireMorte.type
+                          INNER JOIN Boitier_EmplacementMemoireMorte
+                            ON EmplacementMemoireMorte.type = Boitier_EmplacementMemoireMorte.typeEmplacementMemoireMorte
+                          WHERE noBoitier = " . $noBoitier;
+            }
+
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
             break;
         case 7: // Boitier
+            // Colonnes à afficher pour le tableau des boitiers
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -297,15 +355,54 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT no, nom, hauteur, largeur, profondeur, prix
+            // Requête de base
+            $req = "SELECT DISTINCT no, nom, hauteur, largeur, profondeur, prix
                     FROM Boitier
                       INNER JOIN Composant
                         ON Boitier.noComposant = Composant.no";
 
+            // Prendre en compte un SSD, HDD, alimentation et une carte mère sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][5]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][6]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][8]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][1])) {
+
+                $noSSD = $_SESSION['componentsList'][5]['selected'];
+                $noHDD = $_SESSION['componentsList'][6]['selected'];
+                $noAlimentation = $_SESSION['componentsList'][8]['selected'];
+                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
+
+                $whereClause = "";
+
+                if ($noSSD || $noHDD) {
+                    $req .= " INNER JOIN Boitier_EmplacementMemoireMorte 
+                                ON Boitier.noComposant = Boitier_EmplacementMemoireMorte.noBoitier 
+                              INNER JOIN EmplacementMemoireMorte 
+                                ON Boitier_EmplacementMemoireMorte.typeEmplacementMemoireMorte = EmplacementMemoireMorte.type 
+                              INNER JOIN MemoireMorte 
+                                ON EmplacementMemoireMorte.type = MemoireMorte.typeEmplacementMemoireMorte ";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "MemoireMorte.noComposant IN ('" . $noSSD . "', '" . $noHDD . "')";
+                }
+                if ($noAlimentation) {
+                    $req .= " INNER JOIN Boitier_FacteurForme 
+                                ON Boitier.noComposant = Boitier_FacteurForme.noBoitier 
+                              INNER JOIN FacteurForme 
+                                ON Boitier_FacteurForme.typeFacteurForme = FacteurForme.type 
+                              INNER JOIN Alimentation 
+                                ON FacteurForme.type = Alimentation.typeFacteurForme";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "Alimentation.noComposant = " . $noAlimentation;
+                }
+
+                $req .= $whereClause;
+            }
+
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
             break;
-        case 8:
+        case 8: // Alimentation
+            // Colonnes à afficher pour le tableau des alimentations
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -313,10 +410,41 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
+            // Requête de base
             $req = "SELECT no, nom, puissance, prix
                     FROM Alimentation
                       INNER JOIN Composant
                         ON Alimentation.noComposant = Composant.no";
+
+            // Prendre en compte un boitier et une carte graphique sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][7]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][3])) {
+
+                $noBoitier = $_SESSION['componentsList'][7]['selected'];
+                $noCarteGraphique = $_SESSION['componentsList'][3]['selected'];
+
+                $whereClause = "";
+
+                if ($noBoitier) {
+                    $req .= " INNER JOIN FacteurForme ON Alimentation.typeFacteurForme = FacteurForme.type
+                              INNER JOIN Boitier_FacteurForme ON FacteurForme.type = Boitier_FacteurForme.typeFacteurForme";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "noBoitier = " . $noBoitier;
+                }
+                if ($noCarteGraphique) {
+                    $req .= " INNER JOIN Alimentation_ConnecteurAlim
+                                ON Alimentation.noComposant = Alimentation_ConnecteurAlim.noAlimentation
+                              INNER JOIN ConnecteurAlim
+                                ON Alimentation_ConnecteurAlim.typeConnecteurAlim = ConnecteurAlim.type
+                              INNER JOIN CarteGraphique_ConnecteurAlim
+                                ON ConnecteurAlim.type = CarteGraphique_ConnecteurAlim.typeConnecteurAlim";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "noCarteGraphique = " . $noCarteGraphique . " AND " .
+                                    "Alimentation_ConnecteurAlim.nombre >= CarteGraphique_ConnecteurAlim.nombre";
+                }
+
+                $req .= $whereClause;
+            }
 
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
@@ -329,7 +457,7 @@ if (isset($_GET['composant_id'])) {
     // Ajout de la dernière colonne avec le bouton "ajouter"
     array_push($columns, ["title" => "Action"]);
 
-    // Send data
+    // Préparation des données à envoyer
     $payload = [
         "data" => $data,
         "columns" => $columns
