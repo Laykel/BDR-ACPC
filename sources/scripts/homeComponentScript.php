@@ -401,7 +401,8 @@ if (isset($_GET['composant_id'])) {
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
             break;
-        case 8:
+        case 8: // Alimentation
+            // Colonnes à afficher pour le tableau des alimentations
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -409,10 +410,41 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
+            // Requête de base
             $req = "SELECT no, nom, puissance, prix
                     FROM Alimentation
                       INNER JOIN Composant
                         ON Alimentation.noComposant = Composant.no";
+
+            // Prendre en compte un boitier et une carte graphique sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][7]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][3])) {
+
+                $noBoitier = $_SESSION['componentsList'][7]['selected'];
+                $noCarteGraphique = $_SESSION['componentsList'][3]['selected'];
+
+                $whereClause = "";
+
+                if ($noBoitier) {
+                    $req .= " INNER JOIN FacteurForme ON Alimentation.typeFacteurForme = FacteurForme.type
+                              INNER JOIN Boitier_FacteurForme ON FacteurForme.type = Boitier_FacteurForme.typeFacteurForme";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "noBoitier = " . $noBoitier;
+                }
+                if ($noCarteGraphique) {
+                    $req .= " INNER JOIN Alimentation_ConnecteurAlim
+                                ON Alimentation.noComposant = Alimentation_ConnecteurAlim.noAlimentation
+                              INNER JOIN ConnecteurAlim
+                                ON Alimentation_ConnecteurAlim.typeConnecteurAlim = ConnecteurAlim.type
+                              INNER JOIN CarteGraphique_ConnecteurAlim
+                                ON ConnecteurAlim.type = CarteGraphique_ConnecteurAlim.typeConnecteurAlim";
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "noCarteGraphique = " . $noCarteGraphique . " AND " .
+                                    "Alimentation_ConnecteurAlim.nombre >= CarteGraphique_ConnecteurAlim.nombre";
+                }
+
+                $req .= $whereClause;
+            }
 
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
@@ -425,7 +457,7 @@ if (isset($_GET['composant_id'])) {
     // Ajout de la dernière colonne avec le bouton "ajouter"
     array_push($columns, ["title" => "Action"]);
 
-    // Send data
+    // Préparation des données à envoyer
     $payload = [
         "data" => $data,
         "columns" => $columns
