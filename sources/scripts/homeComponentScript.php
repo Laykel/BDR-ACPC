@@ -231,6 +231,7 @@ if (isset($_GET['composant_id'])) {
             $data = $response->fetchAll();
             break;
         case 4: // Refroidisseur
+            // Colonnes à afficher pour le tableau des refroidisseurs
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -240,10 +241,42 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
-            $req = "SELECT no, nom, hauteur, refroidissementLiquide, helice, prix
+            // Requête de base
+            $req = "SELECT no, Composant.nom, hauteur, refroidissementLiquide, helice, prix
                     FROM Refroidisseur
                       INNER JOIN Composant
                         ON Refroidisseur.noComposant = Composant.no";
+
+            // Prendre en compte un processeur et une carte mère sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][0]) ||
+                array_key_exists("selected", $_SESSION['componentsList'][1])) {
+
+                $noProcesseur = $_SESSION['componentsList'][0]['selected'];
+                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
+
+                $whereClause = "";
+
+                if ($noProcesseur || $noCarteMere) {
+                    $req .= " INNER JOIN Refroidisseur_Socket
+                                ON Refroidisseur.noComposant = Refroidisseur_Socket.noRefroidisseur
+                              INNER JOIN Socket
+                                ON Refroidisseur_Socket.nomSocket = Socket.nom";
+                    if ($noProcesseur) {
+                        $req .= " INNER JOIN Processeur
+                                    ON Socket.nom = Processeur.nomSocket";
+                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                        "Processeur.noComposant = " . $noProcesseur;
+                    }
+                    if ($noCarteMere) {
+                        $req .= " INNER JOIN CarteMere
+                                    ON Socket.nom = CarteMere.nomSocket";
+                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                        "CarteMere.noComposant = " . $noCarteMere;
+                    }
+                }
+
+                $req .= $whereClause;
+            }
 
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
