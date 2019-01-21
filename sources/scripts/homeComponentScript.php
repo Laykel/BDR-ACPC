@@ -282,6 +282,7 @@ if (isset($_GET['composant_id'])) {
             $data = $response->fetchAll();
             break;
         case 5: // SSD
+            // Colonnes à afficher pour le tableau des SSD
             $columns = [
                 ["title" => "Numéro", "data" => "no"],
                 ["title" => "Nom", "data" => "nom"],
@@ -291,12 +292,23 @@ if (isset($_GET['composant_id'])) {
                 ["title" => "Prix", "data" => "prix"],
             ];
 
+            // Requête de base
             $req = "SELECT no, nom, capacite, vitesseEcriture, vitesseLecture, prix
                     FROM SSD
                       INNER JOIN MemoireMorte
                         ON SSD.noComposantMemoireMorte = MemoireMorte.noComposant
                       INNER JOIN Composant
                         ON MemoireMorte.noComposant = Composant.no";
+
+            // Prendre en compte un boitier sélectionné
+            if (array_key_exists("selected", $_SESSION['componentsList'][7])) {
+                $noBoitier = $_SESSION['componentsList'][7]['selected'];
+                $req .= " INNER JOIN EmplacementMemoireMorte
+                            ON MemoireMorte.typeEmplacementMemoireMorte = EmplacementMemoireMorte.type
+                          INNER JOIN Boitier_EmplacementMemoireMorte
+                            ON EmplacementMemoireMorte.type = Boitier_EmplacementMemoireMorte.typeEmplacementMemoireMorte
+                          WHERE noBoitier = " . $noBoitier;
+            }
 
             $response = dbRequest($req, 'select');
             $data = $response->fetchAll();
