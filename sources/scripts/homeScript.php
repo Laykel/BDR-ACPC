@@ -8,7 +8,6 @@
 //---------------------------------------------------------------
 session_start();
 
-var_dump($_POST);
 $title = "ACPC - Accueil";
 
 // Flag permettant d'ouvrir ou non le panel des filtres
@@ -34,11 +33,11 @@ if (isset($_POST['PCtype']) && isset($_POST['PCbudget'])) {
         ["label" => "Alimentation"]
     ];
 
-    // Ajout de la liste dans la session pour pouvoir la modifier en fonction des actions de l'utilisateur
+    // Ajout de la liste dans la session pour pouvoir y accéder ailleur
     $_SESSION['componentsList'] = $componentsList;
 }
 
-// Gestion de l'ajout/suppression d'un composant dans la configuration du PC
+// Gestion de l'ajout/suppression d'un composant dans la configuration du PC ainsi que la génération de la liste
 if (isset($_POST['action'])) {
     // Sélection d'un composant dans la configuration du PC
     if ($_POST['action'] == "add" && isset($_POST['component-id']) && isset($_POST['component-no'])) {
@@ -55,6 +54,28 @@ if (isset($_POST['action'])) {
         // Suppression du composant sélectionné
         unset($_SESSION['componentsList'][$componentId]['selected']);
         var_dump($_SESSION['componentsList'][$componentId]);
+    } // Génération de la liste des composants sélectionnés
+    else if ($_POST['action'] == "generate") {
+        require "../model/dbRequest.php";
+        $selectedComponents = [];   // Tableau des composants sélectionnés
+
+        foreach ($_SESSION['componentsList'] as $key => $component) {
+            // Ajout du composant dans le tableau des composants sélectionnés
+            if ($component['selected']) {
+                $noComponent = $component['selected'];  // Id du composant dans la base de données
+
+                // Récupération du nom et du prix du composant sélectionné par l'utilisateur
+                $req = "SELECT nom, prix FROM Composant WHERE no = " . $noComponent;
+                $response = dbRequest($req, 'select');
+                $data = $response->fetchAll();
+
+                // Ajout du label
+                $data[0]['label'] = $component['label'];
+
+                array_push($selectedComponents, $data[0]);
+            }
+        }
+        echo json_encode($selectedComponents);
     }
 }
 ?>

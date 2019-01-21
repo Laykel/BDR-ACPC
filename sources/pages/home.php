@@ -102,6 +102,32 @@ if (isset($componentsList)) {
         </div>
 <?php
     }
+?>
+  <!-- Bouton pour générer la configuration du PC -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalConfigPC" id="genereListe">
+    Générer
+  </button>
+
+  <!-- Fenêtre popup permettant d'afficher la configuration du PC -->
+  <div class="modal fade" id="modalConfigPC" tabindex="-1" role="dialog" aria-labelledby="modalConfigPC" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Votre ordinateur</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Aucun composant sélectionné</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php
 }
 ?>
 
@@ -219,12 +245,44 @@ if (isset($componentsList)) {
         url: '<?php echo ROOT."/sources/scripts/homeScript.php"; ?>',
         type: 'POST',
         data: 'action=delete&component-id='+component_id,
-        success: function(data) {
+        success: function() {
           <?php if (isset($componentsList)) { foreach($componentsList as $key=>$component) { ?>
             getData(<?php echo $key; ?>);
           <?php }} ?>
         }
       });
+    });
+
+    // Génération de la liste des composants sélectionnés par l'utilisateur
+    // Les données sont générées dans homeScript.php
+    $('button#genereListe').click(function() {
+      $.ajax({
+        url: '<?php echo ROOT."/sources/scripts/homeScript.php"; ?>',
+        type: 'POST',
+        data: 'action=generate',
+        success: function(data) {
+          var data = JSON.parse(data);
+          var html = "<ul>";
+          var total = 0;  // Prix total de la configuration du PC
+
+          // Création de la liste à puce
+          $.each(data, function(index, value) {
+            // Ajout du composant dans la fenêtre popup
+            html += "<li><b>" + value["label"] + "</b> : " + value["nom"] + ", <b>prix</b> : " + value["prix"] + " </li>";
+            total += parseFloat(value["prix"]);
+          });
+
+          html += "</ul>";
+          html += "<p><b>Prix total : </b>" + total.toFixed(2) + "</p>";
+
+          // Si aucun composant sélectionné, réinitialisé html
+          if (data.length === 0) {
+              html = "<p>Aucun composant sélectionné</p>";
+          }
+
+          $('div#modalConfigPC .modal-body').html(html);
+        }
+      })
     })
   });
 </script>

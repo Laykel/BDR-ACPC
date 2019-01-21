@@ -170,6 +170,11 @@ COLLAPSIBLE PANEL - COMPOSANT
     font-size: 12px;
 }
 
+button#genereListe {
+    background-color: #2D7CBE;
+    border-color: #2D7CBE;
+}
+
 /*
 ===========
 FILTRE FORM
@@ -189,4 +194,5 @@ FILTRE FORM
 
 #filtre-form button {
     background-color: #2D7CBE;
+    border-color: #2D7CBE;
 }
