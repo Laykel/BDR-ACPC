@@ -138,7 +138,10 @@ if (isset($componentsList)) {
             {
               "targets": [0],
               "visible": false,
-            }]
+            }],
+            "language": {
+              "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+            }
           });
         } else {
           // Rechargement des données dans le DataTable (car un composant a été sélectionné)
