@@ -16,6 +16,15 @@ $showFilters = true;
 // Gestion des filtres
 if (isset($_POST['PCtype']) && isset($_POST['PCbudget'])) {
     // TODO Prendre en compte les champs du formulaire
+    $PCBudgetInput = $_POST['PCbudget'];
+    $PCBudget = 0;
+
+    if ($PCBudgetInput && is_numeric($PCBudgetInput)) {
+        $PCBudget = number_format($PCBudgetInput, 2, '.', '');
+
+        // Ajout du budget dans la session
+        $_SESSION['budget'] = $PCBudget;
+    }
 
     // Une fois le formulaire des filtres saisis, on ferme le panel des filtres
     $showFilters = false;
@@ -57,7 +66,7 @@ if (isset($_POST['action'])) {
     } // Génération de la liste des composants sélectionnés
     else if ($_POST['action'] == "generate") {
         require "../model/dbRequest.php";
-        $selectedComponents = [];   // Tableau des composants sélectionnés
+        $selectedComponents = ["data" => [], "budget" => $_SESSION['budget']];   // Tableau des composants sélectionnés
 
         foreach ($_SESSION['componentsList'] as $key => $component) {
             // Ajout du composant dans le tableau des composants sélectionnés
@@ -72,7 +81,7 @@ if (isset($_POST['action'])) {
                 // Ajout du label
                 $data[0]['label'] = $component['label'];
 
-                array_push($selectedComponents, $data[0]);
+                array_push($selectedComponents["data"], $data[0]);
             }
         }
         echo json_encode($selectedComponents);

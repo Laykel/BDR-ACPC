@@ -214,3 +214,18 @@ PAGINATION
 .page-link:hover {
     background-color: #e9ecef !important;
 }
+
+/*
+=================
+MODAL CONFIG LIST
+=================
+ */
+span.budget-exceeded {
+    color: red;
+}
+
+span.budget-exceeded:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e101";
+    padding-left: 5px;
+}

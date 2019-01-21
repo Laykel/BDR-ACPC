@@ -71,7 +71,9 @@ PHP version : 7.2.13
 <?php
 if (isset($componentsList)) {
 ?>
-    <h4 id="composant-titre">Liste des composants</h4>
+    <h4 id="composant-titre">Liste des composants
+      <span class="float-right">Budget : <?php echo ($PCBudget != 0 ? $PCBudget : "-"); ?></span>
+    </h4>
 <?php
     foreach($componentsList as $key=>$component) {
 ?>
@@ -261,22 +263,30 @@ if (isset($componentsList)) {
         type: 'POST',
         data: 'action=generate',
         success: function(data) {
+          console.log(data);
           var data = JSON.parse(data);
           var html = "<ul>";
           var total = 0;  // Prix total de la configuration du PC
 
           // Création de la liste à puce
-          $.each(data, function(index, value) {
+          $.each(data.data, function(index, value) {
             // Ajout du composant dans la fenêtre popup
             html += "<li><b>" + value["label"] + "</b> : " + value["nom"] + ", <b>prix</b> : " + value["prix"] + " </li>";
             total += parseFloat(value["prix"]);
           });
 
           html += "</ul>";
-          html += "<p><b>Prix total : </b>" + total.toFixed(2) + "</p>";
+          html += "<p><b>Prix total : </b>"; + total.toFixed(2) + "</p>";
+
+          // Vérification si dépassement de budget
+          if (data.budget && data.budget < total) {
+            html += "<span class='budget-exceeded'>" + total.toFixed(2) + "</span></p>";
+          } else {
+            html += total.toFixed(2) + "</p>";
+          }
 
           // Si aucun composant sélectionné, réinitialisé html
-          if (data.length === 0) {
+          if (data.data.length === 0) {
               html = "<p>Aucun composant sélectionné</p>";
           }
 
