@@ -378,7 +378,6 @@ if (isset($_GET['composant_id'])) {
             // Prendre en compte un SSD, HDD, alimentation et une carte mère sélectionné
             $noSSD = getItem($_SESSION['componentsList'][5], "selected");
             $noHDD = getItem($_SESSION['componentsList'][6], "selected");
-            $noAlimentation = getItem($_SESSION['componentsList'][8], "selected");
             $noCarteMere = getItem($_SESSION['componentsList'][1], "selected");
             if ($noSSD || $noHDD || $noAlimentation || $noCarteMere) {
                 $whereClause = "";
@@ -393,20 +392,13 @@ if (isset($_GET['composant_id'])) {
                     $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
                                     "MemoireMorte.noComposant IN ('" . $noSSD . "', '" . $noHDD . "')";
                 }
-                if ($noAlimentation || $noCarteMere) {
+                if ($noCarteMere) {
                     $req .= " INNER JOIN Boitier_FacteurForme 
                                 ON Boitier.noComposant = Boitier_FacteurForme.noBoitier 
                               INNER JOIN FacteurForme 
-                                ON Boitier_FacteurForme.typeFacteurForme = FacteurForme.type";
-                    if ($noAlimentation) {
-                        $req .= " INNER JOIN Alimentation 
-                                    ON FacteurForme.type = Alimentation.typeFacteurForme";
-                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
-                                        "Alimentation.noComposant = " . $noAlimentation;
-                    }
-                    if ($noCarteMere) {
-                        $req .= " INNER JOIN CarteMere
-                                    ON FacteurForme.type = CarteMere.typeFacteurForme";
+                                ON Boitier_FacteurForme.typeFacteurForme = FacteurForme.type
+                              INNER JOIN CarteMere
+                                ON FacteurForme.type = CarteMere.typeFacteurForme";
                         $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
                                         "CarteMere.noComposant = " . $noCarteMere;
                     }
