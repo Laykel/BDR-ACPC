@@ -32,6 +32,9 @@ if (isset($_POST['PCtype']) && isset($_POST['PCbudget'])) {
 
         // Ajout du budget dans la session
         $_SESSION['budget'] = $PCBudget;
+    } else {
+        // Retirer le budget de la session
+        unset($_SESSION['budget']);
     }
 
     // Gestion du type de PC - détermine si PC est pour le gaming
