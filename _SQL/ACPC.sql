@@ -977,7 +977,7 @@ VALUES
 (27, 'ATX'), (27, 'SFX12V'), (27, 'mATX'), (27, 'EATX'),
 (34, 'mATX'), (34, 'SFX12V'), (34, 'Mini ITX'),
 (43, 'ATX'), (43, 'mATX'), (43, 'Mini ITX'),
-(52, 'Mini ITX');
+(52, 'Mini ITX'), (52, 'SFX12V');
 
 INSERT INTO `ACPC`.`Boitier_EmplacementMemoireMorte`
 (`noBoitier`,
