@@ -18,6 +18,18 @@
 session_start();
 require "../model/dbRequest.php";
 
+/**
+ * Fonction permettant de récupérer un élément d'un tableau si la clé est existante.
+ * Si elle  ne l'est pas, la fonction retourne la valeur par défaut
+ * @param $arr tableau dans lequel rechercher la valeur
+ * @param $key clé du tableau
+ * @param $default valeur par défaut si la clé n'est pas trouvée
+ * @return la valeur contenu dans le tableau ou la valeur par défaut, $default
+ */
+function getItem($arr, $key, $default = 0) {
+    return array_key_exists($key, $arr) ? $arr[$key] : $default;
+}
+
 if (isset($_GET['composant_id'])) {
     $componentId = $_GET['composant_id'];   // Id du composant (correspond à l'index de la liste $componentsList)
 
@@ -42,12 +54,10 @@ if (isset($_GET['composant_id'])) {
                         ON Processeur.noComposant = Composant.no";
 
             // Prendre en compte une carte mère et/ou un refroidisseur sélectionné
-            if (array_key_exists("selected", $_SESSION['componentsList'][1]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][4])) {
+            $noCarteMere = getItem($_SESSION['componentsList'][1], "selected");
+            $noRefroidisseur = getItem($_SESSION['componentsList'][4], "selected");
 
-                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
-                $noRefroidisseur = $_SESSION['componentsList'][4]['selected'];
-
+            if ($noCarteMere || $noRefroidisseur) {
                 $req .= " INNER JOIN Socket ON Processeur.nomSocket = Socket.nom";
 
                 // Par défaut, il n'y pas de clause WHERE
@@ -94,18 +104,13 @@ if (isset($_GET['composant_id'])) {
 
             // Prendre en compte une mémoire vive, un processeur, un refroidisseur, une carte graphique,
             // un boîtier sélectionné
-            if (array_key_exists("selected", $_SESSION['componentsList'][2]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][0]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][4]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][3]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][7])) {
+            $noMemoireVive = getItem($_SESSION['componentsList'][2], "selected");
+            $noProcesseur = getItem($_SESSION['componentsList'][0], "selected");
+            $noRefroidisseur = getItem($_SESSION['componentsList'][4], "selected");
+            $noCarteGraphique = getItem($_SESSION['componentsList'][3], "selected");
+            $noBoitier = getItem($_SESSION['componentsList'][7], "selected");
 
-                $noMemoireVive = $_SESSION['componentsList'][2]['selected'];
-                $noProcesseur = $_SESSION['componentsList'][0]['selected'];
-                $noRefroidisseur = $_SESSION['componentsList'][4]['selected'];
-                $noCarteGraphique = $_SESSION['componentsList'][3]['selected'];
-                $noBoitier = $_SESSION['componentsList'][7]['selected'];
-
+            if ($noMemoireVive || $noProcesseur || $noRefroidisseur || $noCarteGraphique || $noBoitier) {
                 $whereClause = "";
 
                 if ($noMemoireVive) {
@@ -175,8 +180,8 @@ if (isset($_GET['composant_id'])) {
                         ON MemoireVive.noComposant = Composant.no";
 
             // Prendre en compte une carte mère sélectionnée
-            if (array_key_exists("selected", $_SESSION['componentsList'][1])) {
-                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
+            $noCarteMere = getItem($_SESSION['componentsList'][1], "selected");
+            if ($noCarteMere) {
                 $req .= " INNER JOIN ConnecteurMemoireVive
                             ON MemoireVive.typeConnecteurMemoireVive = ConnecteurMemoireVive.type
                           INNER JOIN TypeMemoireVive
@@ -211,12 +216,9 @@ if (isset($_GET['composant_id'])) {
                         ON CarteGraphique.nomPuceGraphique = PuceGraphique.nom";
 
             // Prendre en compte une carte mère et une alimentation sélectionnée
-            if (array_key_exists("selected", $_SESSION['componentsList'][1]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][8])) {
-
-                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
-                $noAlimentation = $_SESSION['componentsList'][8]['selected'];
-
+            $noCarteMere = getItem($_SESSION['componentsList'][1], "selected");
+            $noAlimentation = getItem($_SESSION['componentsList'][8], "selected");
+            if ($noCarteMere || $noAlimentation) {
                 $whereClause = "";
 
                 if ($noCarteMere) {
@@ -263,12 +265,9 @@ if (isset($_GET['composant_id'])) {
                         ON Refroidisseur.noComposant = Composant.no";
 
             // Prendre en compte un processeur et une carte mère sélectionné
-            if (array_key_exists("selected", $_SESSION['componentsList'][0]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][1])) {
-
-                $noProcesseur = $_SESSION['componentsList'][0]['selected'];
-                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
-
+            $noProcesseur = getItem($_SESSION['componentsList'][0], "selected");
+            $noCarteMere = getItem($_SESSION['componentsList'][1], "selected");
+            if ($noProcesseur || $noCarteMere) {
                 $whereClause = "";
 
                 if ($noProcesseur || $noCarteMere) {
@@ -316,8 +315,8 @@ if (isset($_GET['composant_id'])) {
                         ON MemoireMorte.noComposant = Composant.no";
 
             // Prendre en compte un boitier sélectionné
-            if (array_key_exists("selected", $_SESSION['componentsList'][7])) {
-                $noBoitier = $_SESSION['componentsList'][7]['selected'];
+            $noBoitier = getItem($_SESSION['componentsList'][7], "selected");
+            if ($noBoitier) {
                 $req .= " INNER JOIN EmplacementMemoireMorte
                             ON MemoireMorte.typeEmplacementMemoireMorte = EmplacementMemoireMorte.type
                           INNER JOIN Boitier_EmplacementMemoireMorte
@@ -347,8 +346,8 @@ if (isset($_GET['composant_id'])) {
                         ON MemoireMorte.noComposant = Composant.no";
 
             // Prendre en compte un boitier sélectionné
-            if (array_key_exists("selected", $_SESSION['componentsList'][7])) {
-                $noBoitier = $_SESSION['componentsList'][7]['selected'];
+            $noBoitier = getItem($_SESSION['componentsList'][7], "selected");
+            if ($noBoitier) {
                 $req .= " INNER JOIN EmplacementMemoireMorte
                             ON MemoireMorte.typeEmplacementMemoireMorte = EmplacementMemoireMorte.type
                           INNER JOIN Boitier_EmplacementMemoireMorte
@@ -377,16 +376,11 @@ if (isset($_GET['composant_id'])) {
                         ON Boitier.noComposant = Composant.no";
 
             // Prendre en compte un SSD, HDD, alimentation et une carte mère sélectionné
-            if (array_key_exists("selected", $_SESSION['componentsList'][5]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][6]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][8]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][1])) {
-
-                $noSSD = $_SESSION['componentsList'][5]['selected'];
-                $noHDD = $_SESSION['componentsList'][6]['selected'];
-                $noAlimentation = $_SESSION['componentsList'][8]['selected'];
-                $noCarteMere = $_SESSION['componentsList'][1]['selected'];
-
+            $noSSD = getItem($_SESSION['componentsList'][5], "selected");
+            $noHDD = getItem($_SESSION['componentsList'][6], "selected");
+            $noAlimentation = getItem($_SESSION['componentsList'][8], "selected");
+            $noCarteMere = getItem($_SESSION['componentsList'][1], "selected");
+            if ($noSSD || $noHDD || $noAlimentation || $noCarteMere) {
                 $whereClause = "";
 
                 if ($noSSD || $noHDD) {
@@ -399,15 +393,23 @@ if (isset($_GET['composant_id'])) {
                     $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
                                     "MemoireMorte.noComposant IN ('" . $noSSD . "', '" . $noHDD . "')";
                 }
-                if ($noAlimentation) {
+                if ($noAlimentation || $noCarteMere) {
                     $req .= " INNER JOIN Boitier_FacteurForme 
                                 ON Boitier.noComposant = Boitier_FacteurForme.noBoitier 
                               INNER JOIN FacteurForme 
-                                ON Boitier_FacteurForme.typeFacteurForme = FacteurForme.type 
-                              INNER JOIN Alimentation 
-                                ON FacteurForme.type = Alimentation.typeFacteurForme";
-                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
-                                    "Alimentation.noComposant = " . $noAlimentation;
+                                ON Boitier_FacteurForme.typeFacteurForme = FacteurForme.type";
+                    if ($noAlimentation) {
+                        $req .= " INNER JOIN Alimentation 
+                                    ON FacteurForme.type = Alimentation.typeFacteurForme";
+                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                        "Alimentation.noComposant = " . $noAlimentation;
+                    }
+                    if ($noCarteMere) {
+                        $req .= " INNER JOIN CarteMere
+                                    ON FacteurForme.type = CarteMere.typeFacteurForme";
+                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                        "CarteMere.noComposant = " . $noCarteMere;
+                    }
                 }
 
                 $req .= $whereClause;
@@ -432,12 +434,9 @@ if (isset($_GET['composant_id'])) {
                         ON Alimentation.noComposant = Composant.no";
 
             // Prendre en compte un boitier et une carte graphique sélectionné
-            if (array_key_exists("selected", $_SESSION['componentsList'][7]) ||
-                array_key_exists("selected", $_SESSION['componentsList'][3])) {
-
-                $noBoitier = $_SESSION['componentsList'][7]['selected'];
-                $noCarteGraphique = $_SESSION['componentsList'][3]['selected'];
-
+            $noBoitier = getItem($_SESSION['componentsList'][7], "selected");
+            $noCarteGraphique = getItem($_SESSION['componentsList'][3], "selected");
+            if ($noBoitier || $noCarteGraphique) {
                 $whereClause = "";
 
                 if ($noBoitier) {
