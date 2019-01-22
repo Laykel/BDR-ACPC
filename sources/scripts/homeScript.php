@@ -85,7 +85,7 @@ if (isset($_POST['action'])) {
 
         foreach ($_SESSION['componentsList'] as $key => $component) {
             // Ajout du composant dans le tableau des composants sélectionnés
-            if ($component['selected']) {
+            if (array_key_exists("selected", $component)) {
                 $noComponent = $component['selected'];  // Id du composant dans la base de données
 
                 // Récupération du nom et du prix du composant sélectionné par l'utilisateur
