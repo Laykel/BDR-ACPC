@@ -379,7 +379,7 @@ if (isset($_GET['composant_id'])) {
             $noSSD = getItem($_SESSION['componentsList'][5], "selected");
             $noHDD = getItem($_SESSION['componentsList'][6], "selected");
             $noCarteMere = getItem($_SESSION['componentsList'][1], "selected");
-            if ($noSSD || $noHDD || $noAlimentation || $noCarteMere) {
+            if ($noSSD || $noHDD || $noCarteMere) {
                 $whereClause = "";
 
                 if ($noSSD || $noHDD) {
@@ -399,9 +399,8 @@ if (isset($_GET['composant_id'])) {
                                 ON Boitier_FacteurForme.typeFacteurForme = FacteurForme.type
                               INNER JOIN CarteMere
                                 ON FacteurForme.type = CarteMere.typeFacteurForme";
-                        $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
-                                        "CarteMere.noComposant = " . $noCarteMere;
-                    }
+                    $whereClause .= (empty($whereClause) ? " WHERE " : " AND ") .
+                                    "CarteMere.noComposant = " . $noCarteMere;
                 }
 
                 $req .= $whereClause;
