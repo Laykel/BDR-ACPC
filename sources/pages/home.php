@@ -149,7 +149,6 @@ if (isset($componentsList)) {
       type: 'GET',
       data: 'composant_id='+id,
       success: function(data) {
-        console.log(data + "\n\n");
         data = JSON.parse(data);  // Récupérer les données reçues de homeComponentScript.php
 
         // Création des tableaux pour chaque composant
@@ -213,7 +212,6 @@ if (isset($componentsList)) {
 
       // Récupérer les données du composant à ajouter
       var data = table.row($(this).parents('tr')).data();
-      console.log(data);
 
       // Marqué le composant en tant que sélectionné
       $('.selected-component-'+component_id).text(data["nom"]);
@@ -273,7 +271,6 @@ if (isset($componentsList)) {
         type: 'POST',
         data: 'action=generate',
         success: function(data) {
-          console.log(data);
           var data = JSON.parse(data);
           var html = "<ul>";
           var total = 0;  // Prix total de la configuration du PC
