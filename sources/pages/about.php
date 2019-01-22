@@ -71,7 +71,7 @@ PHP version : 7.2.13
    </p>
 
    <p>
-   Merci d’utiliser ACPC et au plaisir de vous revoir.
+   Merci d’utiliser ACPC !
    </p>
 
 </div>
