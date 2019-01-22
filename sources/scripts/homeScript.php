@@ -20,7 +20,6 @@ $showFilters = true;
 
 // Gestion des filtres
 if (isset($_POST['PCtype']) && isset($_POST['PCbudget'])) {
-    // TODO Prendre en compte les champs du formulaire
     // Une fois le formulaire des filtres saisis, on ferme le panel des filtres
     $showFilters = false;
 
@@ -91,7 +90,7 @@ if (isset($_POST['action'])) {
                 $response = dbRequest($req, 'select');
                 $data = $response->fetchAll();
 
-                // Ajout du label
+                // Ajout du label du type de composant
                 $data[0]['label'] = $component['label'];
 
                 array_push($selectedComponents["data"], $data[0]);

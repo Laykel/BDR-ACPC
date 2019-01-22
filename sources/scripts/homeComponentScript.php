@@ -9,7 +9,9 @@
 //               générer les colonnes ainsi que les données à
 //               afficher pour le composant en question. Ce
 //               script nécessite donc le paramètre composant_id
-//               représentant le type du composant.
+//               représentant le type du composant. La variable
+//               'componentsList' est une variable SESSION et a
+//               été créée dans homeScript.php
 // PHP version : 7.2.13
 //---------------------------------------------------------------
 
@@ -467,7 +469,7 @@ if (isset($_GET['composant_id'])) {
             $data = [];
     }
 
-    // Ajout de la dernière colonne avec le bouton "ajouter"
+    // Ajout de la dernière colonne contenant le bouton "ajouter"
     array_push($columns, ["title" => "Action"]);
 
     // Préparation des données à envoyer

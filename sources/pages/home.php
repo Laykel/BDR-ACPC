@@ -9,6 +9,7 @@ PHP version : 7.2.13
 ---------------------------------------------------------------
 -->
 
+<!-- Formulaire pour les filtres -->
 <div class="center-block">
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
@@ -63,10 +64,12 @@ PHP version : 7.2.13
     </div>
   </div>
 </div>
+<!-- Fin du formulaire pour les filtres -->
 
 <?php
 if (isset($componentsList)) {
 ?>
+    <!-- Liste de chaque type de composant mis sous forme d'un panel collapsible -->
     <h4 id="composant-titre">Liste des composants
       <span class="float-right">Budget : <?php echo ($PCBudget != 0 ? $PCBudget : "-"); ?></span>
     </h4>
@@ -103,13 +106,16 @@ if (isset($componentsList)) {
         }
     }
 ?>
+    <!-- Fin de la liste de chaque type de composant -->
+
   <!-- Bouton pour générer la configuration du PC -->
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalConfigPC" id="genereListe">
     Générer
   </button>
 
   <!-- Fenêtre popup permettant d'afficher la configuration du PC -->
-  <div class="modal fade" id="modalConfigPC" tabindex="-1" role="dialog" aria-labelledby="modalConfigPC" aria-hidden="true">
+  <div class="modal fade" id="modalConfigPC" tabindex="-1" role="dialog" aria-labelledby="modalConfigPC"
+       aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -127,6 +133,7 @@ if (isset($componentsList)) {
       </div>
     </div>
   </div>
+  <!-- Fin de la fenêtre popup -->
 <?php
 }
 ?>
@@ -143,10 +150,11 @@ if (isset($componentsList)) {
       data: 'composant_id='+id,
       success: function(data) {
         console.log(data + "\n\n");
-        data = JSON.parse(data);
+        data = JSON.parse(data);  // Récupérer les données reçues de homeComponentScript.php
 
         // Création des tableaux pour chaque composant
         if (!$.fn.DataTable.isDataTable('#tbl-component-'+id)) {
+          // Utilisation du plugin DataTable
           $('#tbl-component-'+id).DataTable({
             "autoWidth": false,
             "data": data.data,
@@ -170,7 +178,7 @@ if (isset($componentsList)) {
             }
           });
         } else {
-          // Rechargement des données dans le DataTable (car un composant a été sélectionné)
+          // Rechargement des données dans le DataTable avec prise en compte d'un composant sélectionné ou supprimé
           $('#tbl-component-'+id).DataTable().clear().rows.add(data.data).draw();
         }
       }
@@ -195,7 +203,7 @@ if (isset($componentsList)) {
       panel.find('.collapse.show').collapse('hide');
     });
 
-    // Sélection d'un composant par l'utilisateur
+    // Sélection d'un composant par l'utilisateur - bouton "ajouter"
     $('.composant .panel-body table').on('click', 'button', function() {
       // Récupérer l'id du composant pour savoir lequel on manipule
       var component_id = $(this).data('component-id');
@@ -220,6 +228,8 @@ if (isset($componentsList)) {
         type: 'POST',
         data: 'action=add&component-id='+component_id+'&component-no='+data["no"],
         success: function() {
+          // On recharge les données en faisant appel à la fonction getData.
+          // On le fait pour les tableaux de chaque type de composant.
           <?php if (isset($componentsList)) { foreach($componentsList as $key=>$component) { ?>
             getData(<?php echo $key; ?>);
           <?php }} ?>
@@ -246,6 +256,8 @@ if (isset($componentsList)) {
         type: 'POST',
         data: 'action=delete&component-id='+component_id,
         success: function() {
+          // On recharge les données en faisant appel à la fonction getData.
+          // On le fait pour les tableaux de chaque type de composant.
           <?php if (isset($componentsList)) { foreach($componentsList as $key=>$component) { ?>
             getData(<?php echo $key; ?>);
           <?php }} ?>
@@ -269,7 +281,7 @@ if (isset($componentsList)) {
           // Création de la liste à puce
           $.each(data.data, function(index, value) {
             // Ajout du composant dans la fenêtre popup
-            html += "<li><b>" + value["label"] + "</b> : " + value["nom"] + ", <b>prix</b> : " + value["prix"] + " </li>";
+            html += "<li><b>" + value["label"] + "</b> : " + value["nom"] + ", <b>prix</b> : " + value["prix"]+" </li>";
             total += parseFloat(value["prix"]);
           });
 
@@ -283,7 +295,7 @@ if (isset($componentsList)) {
             html += total.toFixed(2) + "</p>";
           }
 
-          // Si aucun composant sélectionné, réinitialisé html
+          // Si aucun composant sélectionné, réinitialisé la variable html
           if (data.data.length === 0) {
               html = "<p>Aucun composant sélectionné</p>";
           }
